@@ -53,6 +53,7 @@ $status = $statusMsg = '';
                 header("Location:gestionEtudiant.php"); 
             }else{
                 $statusMsg = "File upload failed, please try again.". $db->error;
+                header('Location:gestionEtudiant.php');
             }
             echo $j;
             }
@@ -74,9 +75,10 @@ $status = $statusMsg = '';
           echo $CIN;
             if ($db->query($sql) === TRUE) {
               echo "Record updated successfully";
-
+               header('Location:gestionEtudiant.php');
             } else {
               echo "Error updating record: " . $db->error;
+              header('Location:gestionEtudiant.php');
             }
             
               }

@@ -1,4 +1,5 @@
 <?php
+//session_start();
    require_once '../database/dbConfig.php'; 
    include('session.php');
 
@@ -43,12 +44,12 @@
 
 
    <div class="col-md-12">
-   <form action="welcome.php?id_anneeS=<?php echo $_SESSION['anneeS']; ?>" role="form" method="post" enctype="multipart/form-data">
+   <form action="welcome.php " role="form" method="post" enctype="multipart/form-data">
    <div class="col-xl-12 col-md-6 mb-4">
    
               <label for="classe">Année scolaire</label>
               <select class="custom-select" name="anneeS" id="">
-                <option selected value="<?php echo $_SESSION['anneeS']; ?>">Choisir...</option>
+                <option selected value="<?php echo $_SESSION['anneeS']; ?>">Choisir l'année scolaire</option>
                   <?php
                   //définir la requete
                   $result = $db->query("SELECT * FROM anneeS ");
@@ -63,25 +64,28 @@
                }
                ?>
               </select>
-              <button type="submit" class="btn btn-info" name="inserer">CHOISIR</button>
+              <button type="submit" class="btn btn-info" name="insererA">CHOISIR</button>
   </form>
 </div>
          
 
 <h1 class="m-0 font-weight-bold text-primary " >BIENVENUE DANS L'ESPACE ADMIN</h1><br>
+ 
 
-
-<?php   $result = $db->query("SELECT * FROM professeur  where anneeS='$id_anneeS'");
+<?php  
+if (isset($_POST['insererA'])) { 
+  //echo 'anne : '.$id_anneeS;
+  $result = $db->query("SELECT * FROM professeur  where anneeS='$id_anneeS'");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrEtudiant++;
-      if ($row['sexe']=='fille') {
+      if ($row['sexe']=='femme') {
         $nbrFille++;
         // code...
       }
-      if ($row['sexe']=='garcon') {
+      if ($row['sexe']=='homme') {
         $nbrGarcon++;
         // code...
       }
@@ -163,11 +167,11 @@
      $nbrGarcon=0; ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrEtudiant++;
-      if ($row['sexe']=='fille') {
+      if ($row['sexe']=='femme') {
         $nbrFille++;
         // code...
       }
-      if ($row['sexe']=='garcon') {
+      if ($row['sexe']=='homme') {
         $nbrGarcon++;
         // code...
       }
@@ -222,7 +226,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Garcon Inscrits</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon;} ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
