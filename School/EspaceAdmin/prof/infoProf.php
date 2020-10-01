@@ -53,7 +53,7 @@
                                     </h2>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">iformation prof</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">informations prof</a>
                                 </li>
                                 
                             </ul>
@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Date de nassence</label>
+                                                <label>Date de naissance</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p><?php echo $row['dateN']; ?></p>
@@ -111,7 +111,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Ville de nassence</label>
+                                                <label>Ville de naissance</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p><?php echo $row['villeN']; ?></p>
@@ -127,7 +127,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Telephome</label>
+                                                <label>Telephone</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p><?php echo $row['tel']; ?></p>
@@ -240,7 +240,7 @@
                                                   </h2>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                                               <li class="nav-item">
-                                                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">iformation professeur</a>
+                                                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">information professeur</a>
                                               </li>
                                               <li class="nav-item">
                                                   <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">information parent</a>
@@ -288,7 +288,7 @@
                                                       </div>
                                                       <div class="row">
                                                           <div class="col-md-6">
-                                                              <label>Date de nassence</label>
+                                                              <label>Date de naissance</label>
                                                           </div>
                                                           <div class="col-md-6">
                                                               <p><input class="form-control" type="date" name="dateN" value="<?php echo $row['dateN'];?>"></p>
@@ -296,7 +296,7 @@
                                                       </div>
                                                       <div class="row">
                                                           <div class="col-md-6">
-                                                              <label>Ville de nassence</label>
+                                                              <label>Ville de naissance</label>
                                                           </div>
                                                           <div class="col-md-6">
                                                               <p><input class="form-control" type="text"  name="villeN" value=" <?php echo $row['villeN']; ?> "></p>
@@ -312,7 +312,7 @@
                                                       </div>
                                                       <div class="row">
                                                           <div class="col-md-6">
-                                                              <label>Telephome</label>
+                                                              <label>Telephone</label>
                                                           </div>
                                                           <div class="col-md-6">
                                                               <p><input class="form-control" type="tel" name="tel" value=" <?php echo $row['tel']; ?> "></p>
