@@ -15,35 +15,84 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
   <link href="../../css/css1.css" rel="stylesheet">
 </head>
 <body>
-<?php require '../defaultAdmin.php';?>
+<?php error_reporting(0);
+//require_once 'uploadProf.php'; ?>
+      
+
+
+<?php require '../defaultAdmin.php';
+require_once 'uploadProf.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
-<?php if($_SERVER["REQUEST_METHOD"] == "GET") {
-    $_SESSION['anneeS'] = $_GET['id_anneeS'];
+
+
+<?php if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $_SESSION['anneeS'] = $_POST['anneeS'];
+
     $id_anneeS=$_SESSION['anneeS'];
  }?>
 
 
 
+
+
+
+   <div class="col-md-12">
+   <form action="AjouterProf.php" role="form" method="post" enctype="multipart/form-data">
+   <div class="col-xl-12 col-md-6 mb-4">
+   
+              <label for="classe">Année scolaire</label>
+              <select class="custom-select" name="anneeS" id="">
+                <option selected value="<?php echo $id_anneeS; ?>">Choisir l'année scolaire</option>
+                  <?php
+                  //définir la requete
+                  $result = $db->query("SELECT * FROM anneeS ");
+               
+                  // boucle sur les données
+                  ?>
+                  <?php while ($row =$result->fetch_assoc()) {
+                  ?>
+                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nom']; ?>
+                   </option>
+                 <?php
+               }
+               ?>
+              </select>
+              <button type="submit" class="btn btn-info" name="insererA">CHOISIR</button>
+  </form>
+</div>
+
+
+
+
  
 <!-- slect info from table -->
-<?php   $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id_anneeS'");
+<?php  
+ if (isset($_POST['insererA']) ) {
+
+
+     
+ $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id_anneeS'");
+ echo 'anne : '.$id_anneeS;
+  
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrEtudiant++;
-      if ($row['sexe']=='fille') {
+      if ($row['sexe']=='femme') {
         $nbrFille++;
         // code...
       }
-      if ($row['sexe']=='garcon') {
+      if ($row['sexe']=='homme') {
         $nbrGarcon++;
         // code...
       }
@@ -98,7 +147,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Hommes Inscrits</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon;//} ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -125,7 +174,7 @@
             </div>
           </div>-->
           <!-- formulaire des etudiant a ajouter  -->
-            <div class="col-xl-12 col-lg-12 card shadow mb-4 "style="background-color:white;font-weight: bold;">
+            <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="background-color:white;font-weight: bold;">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h2 class="m-0 font-weight-bold text-primary ">INFO PROF</h2>
@@ -151,6 +200,7 @@
                 <div id="form" class="shadow "style="margin-top:20px;">
               <div class="form-row">
                   <div class="form-group col-md-6">
+                       <?php //echo 'anne : '.$id_anneeS;?>
                        <label for="nom">Nom</label>
                         <input type="text" class="form-control" id="nom" name="nom[]"  required>
                    </div>
@@ -188,7 +238,7 @@
            <div class="form-group col-md-6">
               <label for="classe">Année scolaire</label>
               <select class="custom-select" name="anneeS[]" id="">
-                <option selected value="-1">Choisir...</option>
+                <option selected value="-1">Choisir l'année scolaire</option>
                   <?php
                   //définir la requete
                   $result = $db->query("SELECT * FROM anneeS ");
@@ -212,8 +262,8 @@
                  <label for="adresse">Sexe</label>
                  <select class="custom-select" id="inputGroupSelect01" name="sexe[]">
                      <option selected>Choose...</option>
-                     <option value="fille">Fille</option>
-                     <option value="garcon">Garcon</option>
+                     <option value="femme">Femme</option>
+                     <option value="homme">Homme</option>
                  </select>
             </div>
             <div class="form-group col-md-6">
@@ -222,7 +272,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="societe">password</label>
-                <input type="text" class="form-control" id="image" name="mdp[]" required>
+                <input type="password" class="form-control" id="image" name="mdp[]" required>
             </div>
             </div>
             
@@ -236,6 +286,8 @@
         </div>
        <button type="submit" class="btn btn-primary" name="inserer">submit<button>
 </form>
+        <?php //echo 'test';
+         } ?>
   </body>
   </html>
  
@@ -254,4 +306,5 @@
   <script src="../../js/demo/chart-area-demo.js"></script>
   <script src="../../js/demo/chart-pie-demo.js"></script>
 </body>
+
 </html>
