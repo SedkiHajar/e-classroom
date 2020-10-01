@@ -28,22 +28,67 @@
 <?php require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
-<?php if($_SERVER["REQUEST_METHOD"] == "GET") {
-    $_SESSION['anneeS'] = $_GET['id_anneeS'];
+
+
+
+
+
+<?php if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $_SESSION['anneeS'] = $_POST['anneeS'];
+
     $id_anneeS=$_SESSION['anneeS'];
  }?>
+
+
+
+
+
+
+   <div class="col-md-12">
+   <form action="gestionProf.php" role="form" method="post" enctype="multipart/form-data">
+   <div class="col-xl-12 col-md-6 mb-4">
+   
+              <label for="classe">Année scolaire</label>
+              <select class="custom-select" name="anneeS" id="">
+                <option selected value="<?php echo $id_anneeS; ?>">Choisir l'année scolaire</option>
+                  <?php
+                  //définir la requete
+                  $result = $db->query("SELECT * FROM anneeS ");
+               
+                  // boucle sur les données
+                  ?>
+                  <?php while ($row =$result->fetch_assoc()) {
+                  ?>
+                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nom']; ?>
+                   </option>
+                 <?php
+               }
+               ?>
+              </select>
+              <button type="submit" class="btn btn-info" name="insererA">CHOISIR</button>
+  </form>
+</div>
+
+
+
+
+
 <!-- slect info from table -->
-<?php   $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id_anneeS'");
+<?php   
+$get=$_GET['anneeS'];//echo 'get: '.$get;
+  if (isset($_POST['insererA']) ) {
+  //echo ' <br>anne: '.$id_anneeS;echo '</br> anneget: '.$get;
+  $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id_anneeS'");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrEtudiant++;
-      if ($row['sexe']=='fille') {
+      if ($row['sexe']=='femme') {
         $nbrFille++;
         // code...
       }
-      if ($row['sexe']=='garcon') {
+      if ($row['sexe']=='homme') {
         $nbrGarcon++;
         // code...
       }
@@ -98,7 +143,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Hommes Inscrits</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; //}?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -153,7 +198,8 @@
       <td class="bg-success"><a  style="color:white;" href="#" >modifier</a></td>
       <td class="bg-danger"><a   style="color:white;" href="uploadProf.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=delete">suprimer</a></td>
       <?php $i++; ?>
-      <?php } ?>
+      <?php }
+    } ?>
     </tr>
   </tbody>
 </table>
@@ -161,7 +207,9 @@
 </div>
 </div>
 
-<?php } ?>
+<?php } 
+
+?>
 <!-- Delete sction-->
 
 <script>
