@@ -51,8 +51,10 @@ $status = $statusMsg = '';
         if($insert){
                 $status = 'success';
                 $statusMsg = "prospect upload successfully.";
+                header("Location:AjouterProf.php");
             }else{
                 $statusMsg = "File upload failed, please try again.". $db->error;
+                header("Location:AjouterProf.php");
             }
             echo $j;
             }
@@ -75,7 +77,7 @@ $status = $statusMsg = '';
           echo $CIN;
             if ($db->query($sql) === TRUE) {
               echo "Record updated successfully";
-               //header("Location:infoProf.php?CIN=$CIN");
+               header("Location:infoProf.php?CIN=$CIN");
             } else {
               echo "Error updating record: " . $db->error;
             }
@@ -107,4 +109,5 @@ $status = $statusMsg = '';
 // Display status message
 echo $statusMsg;
 ?>
-<a href="view.php">view</a>
+<!-- <a href="view.php">view</a>
+ -->
