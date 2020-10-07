@@ -139,7 +139,7 @@
                                                   </h2>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                                               <li class="nav-item">
-                                                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">iformation professeur</a>
+                                                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">information professeur</a>
                                               </li>
                                               
                                           </ul>
@@ -195,7 +195,7 @@
                                       </div>
 
                                   </div>
-                                  <button   class="btn btn-primary" type="submit" name="modifier" value="update">
+                                  <button   class="btn btn-primary" type="submit" name="modifier" value="update">Modifier</button>
                                 </form>
                               </div>
                             <?php } ?>

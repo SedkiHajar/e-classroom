@@ -12,10 +12,10 @@
   <title>BEST EDUK</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="School1/vendor/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="vendor/css/business-frontpage.css" rel="stylesheet">
+  <link href="School1/vendor/css/business-frontpage.css" rel="stylesheet">
 
 </head>
 
@@ -98,8 +98,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="School1/vendor/vendor/jquery/jquery.min.js"></script>
+  <script src="School1/vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
