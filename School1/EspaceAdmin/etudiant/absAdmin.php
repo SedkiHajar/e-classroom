@@ -32,13 +32,15 @@
 $id_Etudiant=$_GET['CIN']; 
 $justif=$_POST['justif'];
 $id_Abs=$_POST['id_abs'];
+$an=$_SESSION['anneeS'];
 if($_SERVER["REQUEST_METHOD"] == "POST") { 
     for ($j = 0; $j <count($justif); $j++)
     {
-        echo $justif[$j];  
+       // echo $justif[$j];  
         $sql="UPDATE abs SET justif='$justif[$j]' WHERE id=$id_Abs[$j]";
         if ($db->query($sql) === TRUE) {
-            echo "Record updated successfully";
+          header("location:absAdmin.php");
+          //  echo "Record updated successfully";
           } else {
             echo "Error updating record: " . $db->error;
           }
@@ -46,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }
-$result2 = $db->query("SELECT DISTINCT matiere.nom,matiere.id FROM matiere INNER JOIN abs ON matiere.id = abs.id_mat WHERE abs.id_etudiant=$id_Etudiant");  
+$result2 = $db->query("SELECT DISTINCT matiere.nom,matiere.id FROM matiere INNER JOIN abs ON matiere.id = abs.id_mat WHERE abs.id_etudiant='$id_Etudiant'");  
                     echo $db->error;
                     while ($row2 =$result2->fetch_assoc()) {
                         $id_Mat=$row2['id'];

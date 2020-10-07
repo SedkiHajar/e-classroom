@@ -168,7 +168,7 @@ require '../defaultAdmin.php';?>
       <td class=""><?php echo $row1['nom']; ?></td> <?php } ?>
       <td class="bg-info"><a style="color:white;" href="infoEtudiant.php?CIN=<?php echo ($row['CIN']); ?>">Plus </a></td>
       <td class="bg-warning"><a style="color:white;" href="#">contacter</a></td>
-      <td class="bg-dark"><a style="color:yellow;" href="absAdmin.php?CIN=<?php echo ($row['CIN']); ?>" >--></a></td>
+      <td class="bg-dark"><a style="color:yellow;" href="absAdmin.php?CIN=<?php echo ($row['CIN']); ?>&amp;id_anneeS=<?php echo $_SESSION['anneeS'];?>" >--></a></td>
       <td class="bg-danger"><a   style="color:white;" href="uploadEtudParent.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=delete">suprimer</a></td>
       <?php $i++; ?>
       <?php } ?>

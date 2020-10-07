@@ -130,14 +130,14 @@
 
 
 
-     <!--  <li class="nav-item <?php if($param == "ges" ) echo("active") ?>">
+      <li class="nav-item <?php if($param == "ges" ) echo("active") ?>">
         <a class="nav-link " href="/School1/EspaceAdmin/etudiant/gestionEtudiant1.php">
           <i class="fa fa-list-alt fa-2x"></i>
           <span>Gestion d'absence</span>
         </a>
         
       </li>
- -->
+
       <li class="nav-item <?php if($param == "time" ) echo("active") ?>">
         <a class="nav-link " href="/School1/EspaceAdmin/timesheet.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">
           <i class="far fa-calendar-alt"></i>
