@@ -56,7 +56,7 @@ $result2 = $db->query("SELECT DISTINCT matiere.nom,matiere.id FROM matiere INNER
                 <thead  class="table table-hover table-primary">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Date d'abssnece</th>
+                        <th scope="col">Date d'absence</th>
                         <th scope="col">nombre d'heure</th>
                         <th scope="col">justifier</th>
                         <th scope="col">supprimer</th>
@@ -92,7 +92,7 @@ $result2 = $db->query("SELECT DISTINCT matiere.nom,matiere.id FROM matiere INNER
                     <button class="btn btn-primary" type="submit">valider</button>
               <form>
                  <?php $url=$_SERVER['HTTP_REFERER'];?>
-                    <a href="<?php echo $url;?>" class="btn btn-info">retuour a la table d'absence</a>
+                    <a href="<?php echo $url;?>" class="btn btn-info">retour à la table d'absences</a>
 
 <!-- java Script script-->
 <script src="../js/AjouterEtud.js?2"></script>

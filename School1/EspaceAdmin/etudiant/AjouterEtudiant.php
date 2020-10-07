@@ -21,7 +21,10 @@
   <link href="../../css/css1.css" rel="stylesheet">
 </head>
 <body>
-<?php require '../defaultAdmin.php';?>
+<?php 
+$p = "ajoE";
+$param = "ajoE" ;
+require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <!-- slect info from table -->
 

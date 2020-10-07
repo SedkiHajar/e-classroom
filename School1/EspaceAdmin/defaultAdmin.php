@@ -29,10 +29,10 @@
       <hr class="sidebar-divider my-0">
       <!-- Nav Item - Dashboard -->
 
-      <li class="nav-item active">
+      <li class="nav-item <?php if($param == "dash" ) echo("active") ?>">
 
-        <a class="nav-link" href="/School/EspaceAdmin/welcome.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
+        <a class="nav-link" href="/School1/EspaceAdmin/welcome.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">
+          <i class="fas fa-home fa-2x"></i>
           <span>Dashboard</span></a>
       </li>
       <!-- Divider -->
@@ -42,41 +42,41 @@
         Interface
       </div>
       <!-- Nav Item - Etudiant item -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsea" aria-expanded="true" aria-controls="collapsea">
+      <li class="nav-item <?php if($param == "ajoA" or $param == "gesA") echo("active") ?>">
+        <a class="nav-link <?php if($param != "ajoA" and $param != "gesA") echo("collapsed")?>" href="#" data-toggle="collapse" data-target="#collapsea" aria-expanded="true" aria-controls="collapsea">
           <i class="fas fa-fw fa-cog"></i>
           <span>Annee scolaire</span>
         </a>
-        <div id="collapsea" class="collapse" aria-labelledby="headinga" data-parent="#accordionSidebar">
+        <div id="collapsea" class="collapse <?php if($param == "ajoA" or $param == "gesA") echo("show") ?>" aria-labelledby="headinga" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/School/EspaceAdmin/annee/AjouterAnnee.php">Ajouter annee scolaire</a>
-            <a class="collapse-item" href="/School/EspaceAdmin/annee/gestionAnnee.php">Voir les annee scolaires</a>
+            <a class="collapse-item <?php if($param == "ajoA") echo("active") ?>" href="/School1/EspaceAdmin/annee/AjouterAnnee.php">Ajouter annee scolaire</a>
+            <a class="collapse-item <?php if($param == "gesA") echo("active") ?>" href="/School1/EspaceAdmin/annee/gestionAnnee.php">Voir les annee scolaires</a>
           </div>
         </div>
       </li>
      
-      <li class="nav-item">
+     <!--  <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParent" aria-expanded="true" aria-controls="collapseParent">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-user"></i>
           <span>Espace Parent</span>
         </a>
         <div id="collapseParent" class="collapse" aria-labelledby="headingParent" data-parent="#accordionSidebar">
           
         </div>
-      </li>
+      </li> -->
       
       <!-- Divider -->
       <!-- Nav Item - Prof item -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProf" aria-expanded="true" aria-controls="collapseProf">
-          <i class="fas fa-fw fa-cog"></i>
+      <li class="nav-item <?php if($param == "ajoP" or $param== "gesP") echo("active") ?>">
+        <a class="nav-link <?php if($param != "ajoP" and $param != "gesP") echo("collapsed")?>" href="#" data-toggle="collapse" data-target="#collapseProf" aria-expanded="true" aria-controls="collapseProf">
+         <i class="fas fa-chalkboard-teacher"></i>
           <span>Espace Professeur</span>
         </a>
-        <div id="collapseProf" class="collapse" aria-labelledby="headingProf" data-parent="#accordionSidebar">
+        <div id="collapseProf" class="collapse <?php if($param == "ajoP" or $param == "gesP") echo("show") ?>" aria-labelledby="headingProf" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
 
-            <a class="collapse-item" href="/School/EspaceAdmin/prof/AjouterProf.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Ajouter les Professeurs</a>
-            <a class="collapse-item" href="/School/EspaceAdmin/prof/gestionProf.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Gerer les Professeurs</a>
+            <a class="collapse-item <?php if($param == "ajoP") echo("active") ?>" href="/School1/EspaceAdmin/prof/AjouterProf.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Ajouter les Professeurs</a>
+            <a class="collapse-item <?php if($param == "gesP") echo("active") ?>" href="/School1/EspaceAdmin/prof/gestionProf.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Gerer les Professeurs</a>
           </div>
         </div>
       </li>
@@ -100,29 +100,29 @@
 
 
       <!-- Nav Item - class item -->
-      <li class="nav-item">
+      <li class="nav-item <?php if($param == "ajoC" or $param== "gesC") echo("active") ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCl" aria-expanded="true" aria-controls="collapseCl">
-          <i class="fas fa-fw fa-cog"></i>
+         <i class="fas fa-chalkboard"></i>
           <span>Espace classe</span>
         </a>
-        <div id="collapseCl" class="collapse" aria-labelledby="headingCl" data-parent="#accordionSidebar">
+        <div id="collapseCl" class="collapse <?php if($param == "ajoC" or $param == "gesC") echo("show") ?>" aria-labelledby="headingCl" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/School/EspaceAdmin/classe/AjouterCl.php">Ajouter les classes<br>et les matieres</a>
-            <a class="collapse-item" href="/School/EspaceAdmin/classe/gestionClMatProf.php">Gerer les classes</a>  
+            <a class="collapse-item <?php if($param == "ajoC") echo("active") ?>" href="/School1/EspaceAdmin/classe/AjouterCl.php">Ajouter les classes<br>et les matieres</a>
+            <a class="collapse-item <?php if($param == "gesC") echo("active") ?>" href="/School1/EspaceAdmin/classe/gestionClMatProf.php">Gerer les classes</a>  
             
           </div>
         </div>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item <?php if($param == "ajoE" or $param== "gesE") echo("active") ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-graduation-cap"></i>
           <span>Espace Etudiant</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo" class="collapse <?php if($param == "ajoE" or $param == "gesE") echo("show") ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/School/EspaceAdmin/etudiant/AjouterEtudiant.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Ajouter des  Etudiants</a>
-            <a class="collapse-item" href="/School/EspaceAdmin/etudiant/gestionEtudiant.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Gerer les Etudiants</a>
+            <a class="collapse-item <?php if($param == "ajoE") echo("active") ?>" href="/School1/EspaceAdmin/etudiant/AjouterEtudiant.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Ajouter des  Etudiants</a>
+            <a class="collapse-item <?php if($param == "gesE") echo("active") ?>" href="/School1/EspaceAdmin/etudiant/gestionEtudiant.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">Gerer les Etudiants</a>
           </div>
         </div>
       </li>
@@ -130,17 +130,17 @@
 
 
 
-      <li class="nav-item">
-        <a class="nav-link " href="/School/EspaceAdmin/etudiant/gestionEtudiant.php">
-          <i class="fas fa-fw fa-cog"></i>
+     <!--  <li class="nav-item <?php if($param == "ges" ) echo("active") ?>">
+        <a class="nav-link " href="/School1/EspaceAdmin/etudiant/gestionEtudiant1.php">
+          <i class="fa fa-list-alt fa-2x"></i>
           <span>Gestion d'absence</span>
         </a>
         
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link " href="/School/EspaceAdmin/timesheet.php">
-          <i class="fas fa-fw fa-cog"></i>
+ -->
+      <li class="nav-item <?php if($param == "time" ) echo("active") ?>">
+        <a class="nav-link " href="/School1/EspaceAdmin/timesheet.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>">
+          <i class="far fa-calendar-alt"></i>
           <span>Emploi du temps</span>
         </a>
         
@@ -161,7 +161,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/School/EspaceAdmin/index2.php?action=logout">Logout</a>
+          <a class="btn btn-primary" href="/School1/EspaceAdmin/index2.php?action=logout">Logout</a>
         </div>
       </div>
     </div>
@@ -238,7 +238,7 @@
 
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <!-- Sidebar Toggle (Topbar) -->
-          Année scolaire:
+         <h3 style="color: blue;">Année scolaire:</h3> 
    
         <form action=" " role="form" method="post" enctype="multipart/form-data">
    
@@ -257,7 +257,7 @@
                   ?>
                    <option value="<?php echo $row['id']; ?>" 
                                   <?php if( isset($_SESSION['anneeS']) && $row['id']==$_SESSION['anneeS']) echo "selected" ?>>
-                                  <?php echo $row['nomA']; ?>
+                                  <?php echo $row['nomA']; ?></b>
                    </option>
                  <?php
                }

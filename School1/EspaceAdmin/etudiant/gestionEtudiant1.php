@@ -26,8 +26,8 @@
 </head>
 <body>
 <?php 
-$p="ges" ;
-$param = "gesE" ;
+
+$param = "ges" ;
 require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 
@@ -147,7 +147,7 @@ require '../defaultAdmin.php';?>
       <th scope="col">CLASSE</th>
       <th scope="col">PLUS D'INFO</th>
       <th scope="col">CONTACTER</th>
-     <!--  <th scope="col">ABSENCE</th> -->
+      <th scope="col">ABSENCE</th>
       <th scope="col">SUPPRIMER</th>
     </tr>
   </thead>
@@ -167,8 +167,8 @@ require '../defaultAdmin.php';?>
         <?php while($row1 = $result1->fetch_assoc()){?>
       <td class=""><?php echo $row1['nom']; ?></td> <?php } ?>
       <td class="bg-info"><a style="color:white;" href="infoEtudiant.php?CIN=<?php echo ($row['CIN']); ?>">Plus </a></td>
-      <td class="bg-warning"><a style="color:white;" href="#">contacter</a></td><!-- 
-      <td class="bg-dark"><a style="color:yellow;" href="absAdmin.php?CIN=<?php echo ($row['CIN']); ?>" ></a></td> -->
+      <td class="bg-warning"><a style="color:white;" href="#">contacter</a></td>
+      <td class="bg-dark"><a style="color:yellow;" href="absAdmin.php?CIN=<?php echo ($row['CIN']); ?>" >--></a></td>
       <td class="bg-danger"><a   style="color:white;" href="uploadEtudParent.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=delete">suprimer</a></td>
       <?php $i++; ?>
       <?php } ?>

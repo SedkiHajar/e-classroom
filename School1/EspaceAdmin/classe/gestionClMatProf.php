@@ -27,7 +27,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "gesC" ;
+require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 
@@ -165,7 +167,9 @@ $result = $db->query("SELECT * FROM classe where anneeS='$id' ");
 
 
      
-      <td class="" ><!-- <a href="infoClMatProf.php?id_Class=<?php echo ($row['id']); ?>"> --><?php echo $row['nom']; ?><!-- </a> --></td><?php  ?>
+      <td class="" >
+        <a href="infoClMatProf.php?id_Class=<?php echo ($row['id']); ?>"><?php echo $row['nom']; ?></a>
+      </td><?php  ?>
 
 
 

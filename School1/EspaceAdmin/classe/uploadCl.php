@@ -45,18 +45,20 @@ $status = $statusMsg = '';
                  }
 
       }
-                echo 'cin: '.$TableCIN[1].  'ECHOOOOOO';
+               // echo 'cin: '.$TableCIN[1].  'ECHOOOOOO';
             // insert Classe
             for ($j = 0; $j <count($nomC); $j++)
     {
           $insert = $db->query("INSERT into classe(nom,anneeS) VALUES ('$nomC[$j]','$id')");
           if($insert){
           $db->query($insert);
+          $id_Classe=$db->insert_id;
 
           printf ("New Classe has id %d.\n", $id_Classe=$db->insert_id);
                 $status = 'success';
                 $statusMsg = "Classe upload successfully.";
-            }else{
+                 header("Location:AjouterCl.php");
+            }else{echo "classe: $id_Classe , nom=$nomC[$j], id=$id" ;
                 $statusMsg = "File upload failed, please try again." . $db->error;
             }                
          
@@ -69,7 +71,7 @@ $status = $statusMsg = '';
                     $status = 'success';
                     $statusMsg = "bien  upload successfully.";
                     header("Location:AjouterCl.php");
-                }else{
+                }else{  
                     $statusMsg = "File upload failed, please try again." . $db->error;
                 }
 
@@ -228,7 +230,7 @@ $status = $statusMsg = '';
 
             if ($db->query($sql) === TRUE) {
               echo "Record deleted successfully";
-              header('Location:InfoClMatProf.php?id_Class=$id_Class');
+              header("Location:InfoClMatProf.php?id_Class=$id_Class");
             } else {
               echo "Error deleting record: " . $db->error;
             }

@@ -27,7 +27,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "gesC" ;
+require '../defaultAdmin.php';?>
 <!-- debut de profile  -->
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
@@ -148,7 +150,7 @@
    <!-- DataTales Example -->
   <div class="card shadow col-xl-12 col-md-6 mb-4">
       <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Les matieres</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -161,7 +163,7 @@
       <th scope="col">MATIERE</th>
       <th scope="col">COEF</th>
       <th scope="col">PROF</th>
-      <th scope="col">AJOUTER COURS</th>
+      <!-- <th scope="col">AJOUTER COURS</th> -->
       
       <th scope="col">SUPPRIMER</th>
       
@@ -190,10 +192,10 @@
       <?php while($row1 = $result1->fetch_assoc()){?> 
       <td class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>
       
-      <td class="bg-info"><a   style="color:white;" href="AjouterCours.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Ajouter Cours</a></td>
+     <!--  <td class="bg-info"><a   style="color:white;" href="AjouterCours.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Ajouter Cours</a></td> -->
      
      
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer">suprimer</a></td>
+      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer">suprimer</a></td> 
       <?php $i++; ?>
       <?php } ?>
     </tr>

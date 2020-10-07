@@ -28,7 +28,9 @@
 <body>
 
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "ajoP" ;
+require '../defaultAdmin.php';?>
 <!-- debut de profile  -->
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>

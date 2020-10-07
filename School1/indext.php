@@ -1,38 +1,4 @@
 
-                                                        <div class="col-md-6">
-                                                              
-                                                              <?php $id_class= $row['classe']; //echo $id_class;?>                      
-                                                   <?php   $result1 = $db->query("SELECT * FROM classe WHERE idC='$id_class'");?>  
-                                                <?php while($row1 = $result1->fetch_assoc()){?> 
-                                              
-                                                              <label for="classe">Classe</label>
-                                                                      
-                                                          </div>  
-                                                          <div class="col-md-6">  
-                                                             <select class="custom-select" name="classe" id="">
-                                                               <option selected value="<?php echo $row['idC']; ?>" ><?php echo $row1['nomC']; ?></option><?php } ?>
-                                                              <?php
-                
-                                                            $result = $db->query("SELECT distinct c.idC,c.nomC FROM classe c join etudiant e where c.anneeS=e.anneeS ");
-                
-                                                               ?>
-                                                             <?php while ($row =$result->fetch_assoc()) {
-                                                               ?>
-                                                       <option value="<?php echo $row['idC']; ?>" ><?php echo $row['nomC']; ?>
-                                                       </option>
-                                                       <?php
-                                                        }
-                                                         ?>
-                                                                </select>
-                                                          </div>
-
-
-                                                      </div>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,16 +55,16 @@
               
 
 
-                    <a href="/School/EspaceAdmin/login.php" class="btn btn-primary btn-user btn-block">
+                    <a href="/School1/EspaceAdmin/login.php" class="btn btn-primary btn-user btn-block">
                       ESPACE ADMIN
                     </a>
-                    <a href="/School/EspaceProf/login.php" class="btn btn-primary btn-user btn-block">
+                    <a href="/School1/EspaceProf/login.php" class="btn btn-primary btn-user btn-block">
                       ESPACE PROFESSEUR
                     </a>
-                    <a href="/School/EspaceEtudiant/login.php" class="btn btn-primary btn-user btn-block">
+                    <a href="/School1/EspaceEtudiant/login.php" class="btn btn-primary btn-user btn-block">
                       ESPACE ETUDIANT
                     </a> 
-                    <a href="/School/EspaceParent/login.php" class="btn btn-primary btn-user btn-block">
+                    <a href="/School1/EspaceParent/login.php" class="btn btn-primary btn-user btn-block">
                       ESPACE PARENT
                     </a>  
                   
@@ -125,6 +91,9 @@
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; BEST EDUK 2020</p>
     </div>
+     <a href="/School1/EspaceMasterAdmin/login.php" >
+                      ESPACE MASTER ADMIN
+                    </a>
     <!-- /.container -->
   </footer>
 
@@ -135,3 +104,38 @@
 </body>
 
 </html>
+
+
+
+
+
+                                                      <!--   <div class="col-md-6">
+                                                              
+                                                              <?php $id_class= $row['classe']; //echo $id_class;?>                      
+                                                   <?php   $result1 = $db->query("SELECT * FROM classe WHERE idC='$id_class'");?>  
+                                                <?php while($row1 = $result1->fetch_assoc()){?> 
+                                              
+                                                              <label for="classe">Classe</label>
+                                                                      
+                                                          </div>  
+                                                          <div class="col-md-6">  
+                                                             <select class="custom-select" name="classe" id="">
+                                                               <option selected value="<?php echo $row['idC']; ?>" ><?php echo $row1['nomC']; ?></option><?php } ?>
+                                                              <?php
+                
+                                                            $result = $db->query("SELECT distinct c.idC,c.nomC FROM classe c join etudiant e where c.anneeS=e.anneeS ");
+                
+                                                               ?>
+                                                             <?php while ($row =$result->fetch_assoc()) {
+                                                               ?>
+                                                       <option value="<?php echo $row['idC']; ?>" ><?php echo $row['nomC']; ?>
+                                                       </option>
+                                                       <?php
+                                                        }
+                                                         ?>
+                                                                </select>
+                                                          </div>
+
+
+                                                      </div>
+ -->

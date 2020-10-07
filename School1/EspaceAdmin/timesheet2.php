@@ -1,9 +1,12 @@
 
 <?php
    //session_start();
+  error_reporting(0);
+
    require_once '../database/dbConfig.php'; 
 
    include('session.php');
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +18,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>AjouterEtudiant</title>
+  <title>Emploi temps</title>
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,13 +31,19 @@
 
 </head>
 <body>
-<?php require 'defaultAdmin.php';?>
+<?php 
+$param = "time" ;
+
+require 'defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <!-- slect info from table -->
 <!-- get date -->
 <?php
+$id=$_SESSION['anneeS'];
 $classe=$_POST['classe'];
 $_SESSION['emplois'] = $classe;
+//echo 'ann:' . $_SESSION['anneeS'];
+
 //$DateD=$_POST['dateD'];
 //$DateF=$_POST['dateF'];
 //tables
@@ -55,7 +64,7 @@ $time=array('8-9','9-10','10-11','11-12','14-15','15-16','16-17','17-18')
 
 <a href="#" class="btn btn-dark mx-auto" onclick="screenShot()" type="submit" nom="submit">Save</a>
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Emploi du temps</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -89,7 +98,7 @@ $time=array('8-9','9-10','10-11','11-12','14-15','15-16','16-17','17-18')
                         </select>    
                          <!--Pour les prof -->
                          <select class="custom-select" name="" id="" style="color: black; background-color:	#90EE90">
-                            <option selected value="-1">Prof</option>
+                            <option selected value="-1">choisir le professeur</option>
                             <?php
                             //définir la requete
                             $result = $db->query("SELECT DISTINCT(nom) FROM professeur p INNER JOIN matclass c ON p.CIN = c.id_prof WHERE c.id_class='$classe'");  
@@ -99,7 +108,7 @@ $time=array('8-9','9-10','10-11','11-12','14-15','15-16','16-17','17-18')
                             <option value="<?php  $row['nom']; ?>"><?php echo $row['nom'] ;?></option>        
                             <?php }?>    
                         </select>    
-                        <input type="text" class="form-control"  value="salle"  required  style="color: black; background-color:#00FA9A">  
+                        <input type="text" class="form-control"  placeholder="salle"   required  style="color: black; background-color:#00FA9A">  
                     </td>
                     <?php } ?>
                 </tr>

@@ -27,7 +27,9 @@
 
 </head>
 <body>
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "ajoC" ;
+require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 

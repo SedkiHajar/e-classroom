@@ -25,7 +25,10 @@
 
 </head>
 <body>
-<?php require '../defaultAdmin.php';?>
+<?php 
+$p = "gesE";
+$param = "gesE" ;
+require '../defaultAdmin.php';?>
 <!-- debut de profile  -->
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>

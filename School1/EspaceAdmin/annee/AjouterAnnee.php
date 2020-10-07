@@ -21,7 +21,9 @@
   <link href="../../css/css1.css" rel="stylesheet">
 </head>
 <body>
+  <?php $param = "ajoA" ;?>
 <?php require '../defaultAdmin.php';?>
+
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 <!-- slect info from table -->
@@ -156,7 +158,7 @@
         </div>
         <div id="AjoutDeform"></div>
         </div>
-       <button type="submit" class="btn btn-primary" name="inserer">submit<button>
+       <button type="submit" class="btn btn-primary" name="inserer">submit</button>
 </form>
   </body>
   </html>

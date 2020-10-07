@@ -27,6 +27,7 @@
 
 </head>
 <body>
+ <?php $param = "gesA" ;?> 
 <?php require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>

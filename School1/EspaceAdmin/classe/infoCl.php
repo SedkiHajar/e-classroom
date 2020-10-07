@@ -27,7 +27,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "gesC" ;
+require '../defaultAdmin.php';?>
 <!-- debut de profile  -->
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>

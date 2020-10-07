@@ -27,7 +27,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "gesC" ;
+require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 
@@ -143,7 +145,7 @@ $result = $db->query("SELECT * FROM classe WHERE anneeS='$id' ");
    <!-- DataTales Example -->
   <div class="card shadow col-xl-12 col-md-6 mb-4">
       <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Les supports des devoirs</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -156,7 +158,7 @@ $result = $db->query("SELECT * FROM classe WHERE anneeS='$id' ");
      
       
       <!--<th scope="col">MODIFIER</th>-->
-      <th scope="col">SUPPRIMER</th>
+      <!-- <th scope="col">SUPPRIMER</th> -->
       
     </tr>
   </thead>
@@ -170,7 +172,7 @@ $result = $db->query("SELECT * FROM classe WHERE anneeS='$id' ");
        <td class="bg-success"  ><a   style="color:white;" href="<?php echo htmlspecialchars($row['nom'])?>">Voir Support Devoir</a></td>
       
       <!--<td class="bg-info"><a style="color:white;" href="modSD.php?id=<?php echo ($row['id']); ?>">Modifier </a></td>-->
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id=<?php echo ($row['id']); ?>&amp;choix=deleteSD">supprimer</a></td>
+      <!-- <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id=<?php echo ($row['id']); ?>&amp;choix=deleteSD">supprimer</a></td> -->
       <?php $i++; ?>
       <?php } ?>
     </tr>

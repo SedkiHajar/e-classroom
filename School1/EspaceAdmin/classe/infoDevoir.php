@@ -27,7 +27,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "gesC" ;
+require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 <!-- slect info from table -->
@@ -138,7 +140,7 @@ $id=$_SESSION['anneeS'];
    <!-- DataTales Example -->
   <div class="card shadow col-xl-12 col-md-6 mb-4">
       <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Les devoirs</h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -152,8 +154,8 @@ $id=$_SESSION['anneeS'];
       <th scope="col">SUPPORT DEVOIR</th>
       <!--<th scope="col">MATIERE</th>
       <th scope="col">PROF</th>-->
-      <th scope="col">MODIFIER</th>
-      <th scope="col">SUPPRIMER</th>
+     <!--  <th scope="col">MODIFIER</th>
+      <th scope="col">SUPPRIMER</th> -->
       
     </tr>
   </thead>
@@ -187,8 +189,8 @@ $id=$_SESSION['anneeS'];
       <?php while($row1 = $result1->fetch_assoc()){?> 
       <td class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>-->  
       
-      <td class="bg-info"><a style="color:white;" href="modDevoir.php?id_Devoir=<?php echo ($row['id']); ?>">Modifier </a></td>
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Devoir=<?php echo ($row['id']); ?>&amp;choix=deleteDevoir">supprimer</a></td>
+      <!-- <td class="bg-info"><a style="color:white;" href="modDevoir.php?id_Devoir=<?php echo ($row['id']); ?>">Modifier </a></td>
+      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Devoir=<?php echo ($row['id']); ?>&amp;choix=deleteDevoir">supprimer</a></td> -->
       <?php $i++; ?>
       <?php } ?>
     </tr>

@@ -27,7 +27,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultAdmin.php';?>
+<?php 
+$param = "gesC" ;
+require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 
@@ -157,9 +159,9 @@
       <th scope="col">SUPPORT COURS</th>
       <!--<th scope="col">MATIERE</th>
       <th scope="col">PROF</th>-->
-      <th scope="col">AJOUTER DEVOIR</th>
+     <!--  <th scope="col">AJOUTER DEVOIR</th>
       <th scope="col">MODIFIER</th>
-      <th scope="col">SUPPRIMER</th>
+      <th scope="col">SUPPRIMER</th> -->
       
     </tr>
   </thead>
@@ -180,7 +182,7 @@
       <td class="bg-success"><a   style="color:white;" href="infoSC.php?id_Cours=<?php echo ($row['idCour']); ?>">Voir les supports Cours</a></td>
       
 
-      <td class="bg-info"><a   style="color:white;" href="AjouterDevoir.php?id_Cours=<?php echo ($row['idCour']); ?>">Ajouter Devoir</a></td>
+      <!-- <td class="bg-info"><a   style="color:white;" href="AjouterDevoir.php?id_Cours=<?php echo ($row['idCour']); ?>">Ajouter Devoir</a></td> -->
      
 
       <!--<?php $id_Mat= $row['id_Mat']?>  
@@ -193,8 +195,8 @@
       <?php while($row1 = $result1->fetch_assoc()){?> 
       <td class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>-->  
       
-      <td class="bg-info"><a style="color:white;" href="modCours.php?id_Cours=<?php echo ($row['idCour']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Modifier </a></td>
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Cours=<?php echo ($row['idCour']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=deleteCours">supprimer</a></td>
+      <!-- <td class="bg-info"><a style="color:white;" href="modCours.php?id_Cours=<?php echo ($row['idCour']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Modifier </a></td>
+      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Cours=<?php echo ($row['idCour']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=deleteCours">supprimer</a></td> -->
       <?php $i++; ?>
       <?php } ?>
     </tr>

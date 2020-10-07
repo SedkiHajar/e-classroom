@@ -2,6 +2,7 @@
 //session_start();
    require_once '../database/dbConfig.php'; 
    include('session.php');
+    $param = "dash" ;
    require 'defaultAdmin.php';
 
 ?>

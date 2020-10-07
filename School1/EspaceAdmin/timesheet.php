@@ -28,17 +28,22 @@
 
 </head>
 <body>
-<?php require 'defaultAdmin.php';?>
+<?php 
+$param = "time" ;
+require 'defaultAdmin.php';
+$id=$_SESSION['anneeS'];
+//echo 'ann:' . $_SESSION['anneeS'];
+?>
 <!-- Appel de la base de dennée -->
 <!-- slect info from table -->
 <h3 class=" font-weight-bold text-info text-center shadow  titre" style="margin-top: 50px;"> Espace des emplois du temps </h3>
-<div class="col-xl-12 col-lg-12 card shadow mb-4 "style="background-color:white;font-weight: bold; margin-top:100px;">
-    <form action="timesheet2.php" role="form" method="post" enctype="multipart/form-data">
+<div class="col-xl-12 col-lg-12 card shadow mb-4 " style="background-color:white;font-weight: bold; margin-top:100px;">
+    <form action="timesheet2.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>" role="form" method="post" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md-12" >
                 <label for="classe">Choisir une classe </label>
                 <select class="custom-select" name="classe" id="">
-                    <option selected value="-1">classe</option>
+                    <option selected value="-1">choisir la classe</option>
                     <?php
                     //définir la requete
                     $result = $db->query("SELECT * FROM classe ");  
