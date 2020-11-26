@@ -1,7 +1,18 @@
 <?php
     //session_start();
-    require_once '../../database/dbConfig.php'; 
+error_reporting(0);
+include ('../../lang/fb.php');
+require_once '../../database/dbConfig.php';
+ require_once '../../database/function.php';
+include("../../function/func.php"); 
     include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +47,8 @@ require '../defaultAdmin.php';?>
 
 
 <?php  
-  $id=$_SESSION['anneeS'];
-  $result = $db->query("SELECT * FROM etudiant WHERE anneeS='$id'  ");
+  $id=$_SESSION['anneeS'];$admin=$_SESSION['id'];
+  $result = $db->query("SELECT * FROM etudiant WHERE anneeS='$id' and id_admin=$admin  ");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
@@ -56,7 +67,11 @@ require '../defaultAdmin.php';?>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          
           <!-- Page Heading -->
+          <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="margin-top:10px;">
+              <a href="javascript:window.history.back()"><i class="fas fa-arrow-circle-left"></i>Retour</a>
+            </div>
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gestion des etudiants</h1>
             
@@ -115,7 +130,7 @@ require '../defaultAdmin.php';?>
            
           </div>
           <!-- formulaire des etudiant a ajouter  -->
-            <div class="col-xl-12 col-lg-12 card shadow mb-4 "style="background-color:white;font-weight: bold;">
+            <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="background-color:white;font-weight: bold;">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h2 class="m-0 font-weight-bold text-primary ">INFO ETUDIANT</h2>
@@ -132,13 +147,13 @@ require '../defaultAdmin.php';?>
                   <input type="checkbox" aria-label="Checkbox for following text input" id="myCheck"onclick=" AjouterEtudiant()">
                 </div>
               </div>
-              <input type="number" class="form-control" aria-label="Text input with checkbox"id="nbrEtudiant" value="1">
+              <input type="number" class="form-control" aria-label="Text input with checkbox" id="nbrEtudiant" value="1">
             </div>
           </div>
             <!--cors du formulaire-->
            <form action="uploadEtudParent.php" role="form" method="post" enctype="multipart/form-data">
                <h3 class=" font-weight-bold text-info text-center shadow  titre"> ETUDIANT NUMERO  : 1</h3>
-                <div id="form" class="shadow "style="margin-top:20px;">
+                <div id="form" class="shadow " style="margin-top:20px;">
               <div class="form-row">
                   <div class="form-group col-md-6">
                        <label for="nom">Nom</label>
@@ -185,13 +200,13 @@ require '../defaultAdmin.php';?>
                 <option selected value="-1">Choisir l'année scolaire</option>
                   <?php
                   //définir la requete
-                  $result = $db->query("SELECT * FROM anneeS ");
+                  $result = $db->query("SELECT * FROM annees where idAdm=$admin ");
                
                   // boucle sur les données
                   ?>
                   <?php while ($row =$result->fetch_assoc()) {
                   ?>
-                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nomA']; ?>
+                   <option value="<?php echo $row['idAn']; ?>"><?php echo $row['nomA']; ?>
                    </option>
                  <?php
                }
@@ -200,11 +215,11 @@ require '../defaultAdmin.php';?>
             </div>
             <div class="form-group col-md-6">
               <label for="classe">Classe</label>
-              <select class="custom-select" name="classe[]" id="">
+              <select class="custom-select" name="classe[]" id="" required="">
                 <option selected value="-1">Choisir...</option>
                 <?php
               //définir la requete
-               $result = $db->query("SELECT * FROM classe ");?>
+               $result = $db->query("SELECT * FROM classe c join annees a where a.idAn=c.anneeS and a.idAdm=$admin ");?>
                <?php while ($row =$result->fetch_assoc()) {
                ?>
                <option value="<?php echo $row['id']; ?>"><?php echo $row['nom']; ?>
@@ -223,7 +238,7 @@ require '../defaultAdmin.php';?>
             </div>
             <div class="form-group col-md-6">
                  <label for="adresse">Sexe</label>
-                 <select class="custom-select" id="inputGroupSelect01" name="sexe[]">
+                 <select class="custom-select" id="inputGroupSelect01" name="sexe[]" required="">
                      <option selected>Choose...</option>
                      <option value="feminin">Feminin</option>
                      <option value="masculin">Masculin</option>
@@ -231,41 +246,61 @@ require '../defaultAdmin.php';?>
             </div>
             <div class="form-group col-md-6">
                 <label for="societe">photos</label>
-                <input type="file" class="form-control" id="image" name="image[]" required>
+                <input type="file" class="form-control" id="image" name="image[]" required="required">
             </div>
             <div class="form-group col-md-6">
                 <label for="societe">password</label>
                 <input type="password" class="form-control" id="image" name="mdp[]" required>
             </div>
             </div>
-            <h5  class="m-0 font-weight-bold text-primary text-center card shadow titre">Infomration des parents</h5>
+            <h5  class="m-0 font-weight-bold text-primary text-center card shadow titre">Informations des parents</h5>
             <div   class="form-row ">
             <div class="form-group col-md-6">
-                <label for="societe">Nom  parent</label>
-                <input type="text" class="form-control"  name="nomP" >
+                <label for="societe">Nom complet père</label>
+                <input type="text" class="form-control"  name="nomP[]"  required="">
             </div>
             <div class="form-group col-md-6">
-                <label for="societe">Prenom  parent</label>
-                <input type="text" class="form-control"  name="prenomP" >
+                <label for="societe">Nom complet mère</label>
+                <input type="text" class="form-control"  name="nomM[]" required="" >
             </div>
             <div class="form-group col-md-6">
-                <label for="societe">Numero de tel parent</label>
-                <input type="tel" class="form-control"  name="telP" >
+                <label for="societe">Numero de tel pére</label>
+                <input type="tel" class="form-control"  name="telP[]" required="">
             </div>
             <div class="form-group col-md-6">
-                <label for="societe">E-mail parent</label>
-                <input type="text" class="form-control" name="emailP" d>
+                <label for="societe">Numero de tel mère</label>
+                <input type="tel" class="form-control"  name="telM[]" required="">
             </div>
             <div class="form-group col-md-6">
-                 <label for="adresse">Adresse des Parents</label>
-                  <input type="text" class="form-control"  name="adresseP" >
+                 <label for="adresse">Adresse du père</label>
+                  <input type="text" class="form-control"  name="adresseP[]" required="" >
+            </div>
+            <div class="form-group col-md-6">
+                 <label for="adresse">Adresse de la  mère </label>
+                  <input type="text" class="form-control"  name="adresseM[]" required="" >
+            </div>
+            <div class="form-group col-md-6">
+                <label for="societe">E-mail père</label>
+                <input type="email" class="form-control" name="emailP[]" required="">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="societe">E-mail mère</label>
+                <input type="email" class="form-control" name="emailM[]" required="">
+            </div>
+            <div class="form-group col-md-6">
+                 <label for="mdp">Password</label>
+                  <input type="password" class="form-control"  name="mdpP[]" required="">
             </div>
             
           </div>
         </div>
         <div id="AjoutDeform"></div>
+
         </div>
-       <button type="submit" class="btn btn-primary" name="inserer">submit</button>
+       <button type="submit" class="btn btn-primary col-sm-4" name="inserer"><i class="fas fa-plus-circle"></i> 
+       <!-- submit --><?= lang('ajout')?></button>
+       <button type="reset" class="btn btn-danger col-sm-4"><?=lang('res') ?></button>  
+
 </form>
   </body>
   </html>

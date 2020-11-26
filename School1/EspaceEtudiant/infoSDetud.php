@@ -1,8 +1,24 @@
 <?php
-   //session_start();
-   
-   require_once '../database/dbConfig.php';
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+// include ('../lang/fb.php');
+// require_once '../database/dbConfig.php'; 
+// require_once '../database/function.php';
+// include("../function/func.php");
+// include('session.php');
+
+// if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+//       header("location:/School1/EspaceEtudiant/index.php");
+     
+
+//       die();
+//    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +152,7 @@ $id_Prof= $_SESSION['id'];
                                 
                                 
                                 <?php $id_Devoir=$_GET['id_Devoir'];?>
-   <?php   $result = $db->query(" SELECT * FROM tableSD WHERE id_Devoir='$id_Devoir'");
+   <?php   $result = $db->query(" SELECT * FROM tablesd WHERE id_Devoir='$id_Devoir'");
    
      if($result->num_rows > 0){
       
@@ -191,23 +207,27 @@ $id_Prof= $_SESSION['id'];
 
 
 <!-- java Script script-->
- <script src="../js/AjouterEtud.js?2"></script>
-<!-- Bootstrap core JavaScript-->
-  <script src="../../vendor/jquery/jquery.min.js"></script>
-  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+         <script src="../EspaceProf/js/AjouterEtud.js?2"></script>
+        <!-- Bootstrap core JavaScript-->
+          <script src="../vendor/jquery/jquery.min.js"></script>
+          <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="../../js/sb-admin-2.min.js"></script>
+          <!-- Core plugin JavaScript-->
+          <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="../../vendor/chart.js/Chart.min.js"></script>
+          <!-- Custom scripts for all pages-->
+          <script src="../js/sb-admin-2.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="../../js/demo/chart-area-demo.js"></script>
-  <script src="../../js/demo/chart-pie-demo.js"></script>
+          <!-- Page level plugins -->
+          <script src="../vendor/chart.js/Chart.min.js"></script>
+
+          <!-- Page level custom scripts -->
+          <script src="../EspaceProf/js/demo/chart-area-demo.js"></script>
+          <script src="../EspaceProf/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

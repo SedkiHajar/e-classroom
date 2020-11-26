@@ -1,7 +1,21 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +32,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+   <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -132,15 +148,22 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
                                  ORDER BY c.name -->
                                 
                                 <?php $id_Cours=$_GET['id_Cours'];?>
+                                 <?php $id_Class=$_GET['id_Class'];?>
+    <?php $id_Mat=$_GET['id_Mat']; ?>
+    <?php $id_prof=$_GET['id_prof'];?>
+
                                 
-   <?php   $result = $db->query(" SELECT * FROM devoir WHERE id_Cours='$id_Cours'");
+   <?php   $result = $db->query(" SELECT * FROM devoir where id_Cours='$id_Cours'");
+   $res = $db->query(" SELECT * FROM cours WHERE id_Mat='$id_Mat' AND id_Class='$id_Class' AND id_prof='$id_prof'");
+
+          
    
      if($result->num_rows > 0){
       
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
       <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Les devoirs</h6>
       </div>
@@ -158,24 +181,27 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
       <th scope="col">PROF</th>-->
       <th scope="col">MODIFIER</th>
       <th scope="col">SUPPRIMER</th>
+
       
     </tr>
   </thead>
   <tbody>
-    <?php while($row = $result->fetch_assoc()){?>
+   
+    <?php while($row = $result->fetch_assoc()){ ?>
+      <?php //while($row1 = $res->fetch_assoc()){ ?>
     <tr>
       <th class="bg-dark" scope="row"><?php echo $i; ?></th>
 
-
+      
      
       <td class=""  ><?php echo $row['nom']; ?></td>
 
 
       <td class=""  ><?php echo $row['description']; ?></td><?php  ?>
 
+     
 
-
-      <td class="bg-success"><a   style="color:white;" href="infoSD.php?id_Devoir=<?php echo ($row['id']); ?>">Voir les supports Devoir</a></td>
+      <td class=""><a class="btn btn-success" style="color:white;" href="infoSD.php?id_Devoir=<?php echo ($row['id']); ?>&id_Class=<?=$id_Class?>">Voir les supports Devoir</a></td>
       
 
       
@@ -191,10 +217,12 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
       <?php while($row1 = $result1->fetch_assoc()){?> 
       <td class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>-->  
       
-      <td class="bg-info"><a style="color:white;" href="modDevoir.php?id_Devoir=<?php echo ($row['id']); ?>">Modifier </a></td>
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Devoir=<?php echo ($row['id']); ?>&amp;choix=deleteDevoir">supprimer</a></td>
+      <td class=""><a class="btn btn-primary" style="color:white;" href="modDevoir.php?id_Devoir=<?php echo ($row['id']); ?>&id_Cours=<?=$id_Cours?>&id_Class=<?=$id_Class?>"><i class="fa fa-edit"></i> </a></td>
+      <td class=""><a  class="btn btn-danger confirm" style="color:white;" href="uploadCl.php?id_Devoir=<?php echo ($row['id']); ?>&id_Cours=<?=$id_Cours?>&id_Class=<?=$id_Class?>&id_Mat=<?=$row['id_Mat']?>&id_prof=<?=$row['id_prof']?>&amp;choix=deleteDevoir"><i class="fa fa-close"></i></a></td>
       <?php $i++; ?>
-      <?php } ?>
+      <?php } 
+    //}
+    ?>
     </tr>
   </tbody>
 </table>
@@ -212,6 +240,8 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
 <!-- java Script script-->
  <script src="../js/AjouterEtud.js?2"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery.js"></script>
 <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

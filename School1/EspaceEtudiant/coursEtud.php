@@ -1,7 +1,25 @@
 <?php
    //session_start();
-   require_once '../database/dbConfig.php';
-   include('session.php');
+error_reporting(0);
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+// include ('../lang/fb.php');
+// require_once '../database/dbConfig.php'; 
+// require_once '../database/function.php';
+// include("../function/func.php");
+// include('session.php');
+//    if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+//       header("location:/School1/EspaceEtudiant/index.php");
+     
+
+//       die();
+//    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +36,8 @@
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" rel="stylesheet">
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -66,9 +86,10 @@ $an=$_SESSION['anneeE'];
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="margin-top:10px;">
-<a href="javascript:window.history.back()"><i class="fas fa-arrow-circle-left"></i>Retour</a>
-</div>
+          <!-- <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="margin-top:10px;"> -->
+<a href="javascript:window.history.back()">
+<i class="fas fa-arrow-circle-left"></i>Retour</a>
+<!-- </div> -->
    <!-- <a href="infoMatieres.php"><i class="fas fa-arrow-circle-left"></i>Retour</a>
  -->
           <!-- Page Heading -->
@@ -204,7 +225,11 @@ $an=$_SESSION['anneeE'];
 </div>
 <?php //} ?>
  <!-- java Script script-->
+
          <script src="../EspaceProf/js/AjouterEtud.js?2"></script>
+         <script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <!-- Bootstrap core JavaScript-->
           <script src="../vendor/jquery/jquery.min.js"></script>
           <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

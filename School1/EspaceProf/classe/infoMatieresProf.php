@@ -1,7 +1,20 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+   
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +31,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" rel="stylesheet">
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -147,7 +162,7 @@ $id_Prof= $_SESSION['id'];
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
       <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Les matieres</h6>
       </div>
@@ -164,7 +179,7 @@ $id_Prof= $_SESSION['id'];
       <th scope="col">PROF</th>
       <th scope="col">AJOUTER COURS</th>
       
-      <th scope="col">SUPPRIMER</th>
+      <!-- <th scope="col">SUPPRIMER</th> -->
       
     </tr>
   </thead>
@@ -181,18 +196,18 @@ $id_Prof= $_SESSION['id'];
           <?php $id_Mat= $row['id_Mat']?>
           <?php $result2 = $db->query("SELECT coef FROM matiere WHERE id='$id_Mat' ");?>
           <?php while ($row2 =$result2->fetch_assoc()) {?>
-           <td class=""><?php echo $row2['coef']; ?>
+           <td class="" style="color: green"><?php echo $row2['coef']; ?>
        <?php } ?>     
       </td>
 
      <?php $id_prof= $row['id_prof']?>  
       <?php   $result1 = $db->query("SELECT nom,prenom FROM professeur WHERE CIN='$id_prof'");?>
       <?php while($row1 = $result1->fetch_assoc()){?> 
-      <td class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>
+      <td class="" style="color: green"><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>
       
-      <td class="bg-info"><a   style="color:white;" href="AjouterCours.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Ajouter Cours</a></td>
+      <td ><a class="btn btn-info"  style="color:white;" href="AjouterCours.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Ajouter Cours</a></td>
       
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer">suprimer</a></td>
+      <!-- <td class=""><a class="btn btn-danger confirm"  style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer"><i class='fa fa-close'></i>supprimer</a></td> -->
       <?php $i++; ?>
       <?php } ?>
     </tr>
@@ -210,7 +225,12 @@ $id_Prof= $_SESSION['id'];
 
 
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
+
+<!-- java Script script-->
+
+ <script src="../js/jquery.js"></script>
 
         <!-- java Script script-->
          <script src="../js/AjouterEtud.js?2"></script>

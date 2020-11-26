@@ -1,7 +1,19 @@
 <?php
     error_reporting(0); 
-   require_once '../../database/dbConfig.php';
+    include ('../../lang/fb.php');
+require_once '../../database/dbConfig.php';
+
+require_once '../../database/function.php';
+
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +39,9 @@
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 <!-- slect info from table -->
-<?php   $result = $db->query("SELECT * FROM professeur ");
+<?php  
+$admin=$_SESSION['id'];
+ $result = $db->query("SELECT * FROM professeur  where anneeS='$id' and id_admin='$admin'");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
@@ -63,7 +77,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrEtudiant; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -79,7 +93,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                       <i class="fas fa-female fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -95,7 +109,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-user-tie fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -146,7 +160,7 @@
               <div class="form-row">
                   <div class="form-group col-md-6">
                        <label for="nom">Année scolaire</label>
-                        <input type="text" class="form-control" id="nom" name="nom[]"  required>
+                        <input type="text" class="form-control" id="nom" name="nom[]" placeholder="2019/2020" required>
                    </div>
                    
               </div>
@@ -165,6 +179,7 @@
  
 <!-- java Script script-->
  <script src="../js/AjouterEtud.js?2"></script>
+ <script src="../js/jquery.js"></script>
 <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

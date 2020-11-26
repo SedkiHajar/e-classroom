@@ -1,8 +1,19 @@
 <?php
 error_reporting(0); 
+include ('../../lang/fb.php');
    //session_start();
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
+
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +46,8 @@ error_reporting(0);
   <div id="info">
 <!-- slect info from table -->
 
-                                 <?php $id=$_GET['id']; ?>
-   <?php   $result = $db->query(" SELECT * FROM anneeS WHERE id='$id' ");
+                                 <?php $id=$_GET['id']; $admin=$_SESSION['id'];?>
+   <?php   $result = $db->query(" SELECT * FROM annees WHERE idAn='$id' ");
    
      if($result->num_rows > 0){
       
@@ -67,13 +78,13 @@ error_reporting(0);
     <tr>
       <th class="bg-dark" scope="row"><?php echo $i; ?></th>
 
-      <?php $id= $row['id']?>  
+      <?php $id= $row['idAn']?>  
       
       <td class="bg-success">
-          <form action="uploadAnnee.php?id=<?php echo ($row['id']); ?>" role="form" method="post" enctype="multipart/form-data">
+          <form action="uploadAnnee.php?id=<?php echo ($row['idAn']); ?>" role="form" method="post" enctype="multipart/form-data">
           <input name=nom value="<?php echo ($row['nomA']); ?>" >
         </td> 
-      <td class="bg-info"><button class="btn btn-primary" type="submit" name="modifier">modifier<button></td></form>
+      <td class="bg-info"><button class="btn btn-primary" type="submit" name="modifier">modifier</button></td></form>
       
       <?php $i++; ?>
       <?php } ?>

@@ -17,8 +17,8 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="/School1/EspaceMasterAdmin/welcome.php">
+      <li class="nav-item <?php if($param == "dash" ) echo("active") ?>">
+        <a class="nav-link" id="d" href="/School1/EspaceMasterAdmin/welcome.php">
           <i class="fas fa-home fa-2x"></i>
           <span>Dashboard</span></a>
       </li>
@@ -32,15 +32,15 @@
      
       <!-- Divider -->
       <!-- Nav Item - Prof item -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProf" aria-expanded="true" aria-controls="collapseProf">
+      <li class="nav-item <?php if($param == "ajoA" or $param == "gesA") echo("active") ?>">
+        <a class="nav-link <?php if($param != "ajoA" and $param != "gesA") echo("collapsed")?>" href="#" data-toggle="collapse" data-target="#collapseProf" aria-expanded="true" aria-controls="collapseProf">
           <i class="fas fa-fw fa-cog"></i>
           <span>Espace Admin</span>
         </a>
-        <div id="collapseProf" class="collapse" aria-labelledby="headingProf" data-parent="#accordionSidebar">
+        <div id="collapseProf" class="collapse <?php if($param == "ajoA" or $param == "gesA") echo("show") ?>" aria-labelledby="headingProf" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/School1/EspaceMasterAdmin/AjouterMadmin.php">Ajouter les Admin</a>
-            <a class="collapse-item" href="/School1/EspaceMasterAdmin/gestionMadmin.php">Gerer les Admin</a>
+            <a class="collapse-item <?php if($param == "ajoA") echo("active") ?>" href="/School1/EspaceMasterAdmin/AjouterMadmin.php">Ajouter les Admin</a>
+            <a class="collapse-item <?php if($param == "gesA") echo("active") ?>" href="/School1/EspaceMasterAdmin/gestionMadmin.php">Gerer les Admin</a>
           </div>
         </div>
       </li>
@@ -290,13 +290,19 @@
             <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $login_session;?></span>
+              <a class="nav-link dropdown-toggle" href="#logoutModal"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo ucwords($login_session);?></span>
                 <img class="img-profile rounded-circle" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode( $_SESSION['image']); ?>">
               </a>
             </li>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+
+
+
+
+
             <!--     <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
@@ -310,7 +316,7 @@
                   Activity Log
                 </a> -->
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -321,3 +327,4 @@
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
+  

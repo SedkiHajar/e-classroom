@@ -1,5 +1,7 @@
 <?php
 // Include the database configuration file
+error_reporting(0);
+include ('../lang/fb.php');
 require_once '../database/dbConfig.php';
 
  $email=$_POST['email'];

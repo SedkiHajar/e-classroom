@@ -1,6 +1,15 @@
-<?php
-    require_once '../database/dbConfig.php'; 
-   include('session.php');
+<?php 
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+// error_reporting(0);
+// include ('../lang/fb.php');
+//     require_once '../database/dbConfig.php'; 
+//     require_once '../database/function.php';
+//    include('session.php');
 
 ?>
 <!DOCTYPE html>
@@ -13,7 +22,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Espace des abssence </title>
+  <title>Espace des absence </title>
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

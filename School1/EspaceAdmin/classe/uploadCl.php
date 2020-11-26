@@ -1,8 +1,12 @@
 
 <?php
 session_start();
+error_reporting(0);
+include ('../../lang/fb.php');
 // Include the database configuration file
 require_once '../../database/dbConfig.php';
+ require_once '../../database/function.php';
+include("../../function/func.php");
 error_reporting(0);
 // If file upload form is submitted
 
@@ -70,7 +74,7 @@ $status = $statusMsg = '';
               $db->query($insert);
                     $status = 'success';
                     $statusMsg = "bien  upload successfully.";
-                    header("Location:AjouterCl.php");
+                    header("Location:gestionClMatProf.php");
                 }else{  
                     $statusMsg = "File upload failed, please try again." . $db->error;
                 }
@@ -174,7 +178,7 @@ $status = $statusMsg = '';
                 $id=$_GET['id'];
               // code...
             // delete section
-            $sql = "DELETE FROM tableSD WHERE id='$id' ";
+            $sql = "DELETE FROM tablesd WHERE id='$id' ";
 
             if ($db->query($sql) === TRUE) {
               echo "Record deleted successfully";
@@ -189,7 +193,7 @@ $status = $statusMsg = '';
                 $id=$_GET['id'];
               // code...
             // delete section
-            $sql = "DELETE FROM tableSC WHERE id='$id' ";
+            $sql = "DELETE FROM tablesc WHERE id='$id' ";
 
             if ($db->query($sql) === TRUE) {
               echo "Record deleted successfully";
@@ -230,7 +234,7 @@ $status = $statusMsg = '';
 
             if ($db->query($sql) === TRUE) {
               echo "Record deleted successfully";
-              header("Location:InfoClMatProf.php?id_Class=$id_Class");
+              header("Location:infoClMatProf.php?id_Class=$id_Class");
             } else {
               echo "Error deleting record: " . $db->error;
             }
@@ -290,7 +294,7 @@ $status = $statusMsg = '';
             move_uploaded_file($tmp,$chaine.$name);
             array_push($dest,$chaine.$name);
             echo 'fichier: '.$dest[$i];
-            $insert1 = $db->query("INSERT into tableSC(nom,id_Cours) VALUES ('$dest[$i]','$id_Cours')");
+            $insert1 = $db->query("INSERT into tablesc(nom,id_Cours) VALUES ('$dest[$i]','$id_Cours')");
           }
          header("Location:AjouterCours.php?id_Class=$id_Class");
          }
@@ -307,7 +311,7 @@ $status = $statusMsg = '';
             move_uploaded_file($tmp,$chaine.$name);
             array_push($dest,$chaine.$name);
               
-          $sql = "UPDATE tableSD SET nom='$dest' WHERE id='$id'";
+          $sql = "UPDATE tablesd SET nom='$dest' WHERE id='$id'";
           echo $id;
             if ($db->query($sql) === TRUE) {
               echo "Record updated successfully";
@@ -331,7 +335,7 @@ $status = $statusMsg = '';
        
             move_uploaded_file($tmp,$chaine.$name);
             array_push($dest,$chaine.$name);
-          $sql = "UPDATE tableSC SET nom='$dest' WHERE id='$id'";
+          $sql = "UPDATE tablesc SET nom='$dest' WHERE id='$id'";
           echo $id;
             if ($db->query($sql) === TRUE) {
               echo "Record updated successfully";
@@ -417,7 +421,7 @@ $status = $statusMsg = '';
             move_uploaded_file($tmp,$chaine.$name);
             array_push($dest,$chaine.$name);
             //echo " test nom: ".$dest[$i];
-            $insert1 = $db->query("INSERT into tableSD(nom,id_Devoir) VALUES ('$dest[$i]','$id_Devoir')");
+            $insert1 = $db->query("INSERT into tablesd(nom,id_Devoir) VALUES ('$dest[$i]','$id_Devoir')");
           }header("Location:AjouterDevoir.php?id_Cours=$id_Cours");
          }
          }
@@ -447,7 +451,7 @@ $status = $statusMsg = '';
               $fileContent = addslashes(file_get_contents($file[$j]));
               $videoContent = addslashes(file_get_contents($video[$j]));
 
-         $insert = $db->query("INSERT into tableSD(nom,id_Devoir,video) VALUES ('$fileContent','$id_Devoir','$videoContent')");
+         $insert = $db->query("INSERT into tablesd(nom,id_Devoir,video) VALUES ('$fileContent','$id_Devoir','$videoContent')");
         if($insert){
                 $status = 'success';
                 $statusMsg = "prospect upload successfully.";

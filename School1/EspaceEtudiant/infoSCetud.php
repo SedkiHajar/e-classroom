@@ -1,7 +1,22 @@
 <?php
-   //session_start();
-   require_once '../database/dbConfig.php';
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+/*include ('../lang/fb.php');
+require_once '../database/dbConfig.php'; 
+require_once '../database/function.php';
+include("../function/func.php");
+include('session.php');
+   if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +28,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>AjouterEtudiant</title>
+  <title>cour</title>
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -134,10 +149,10 @@ $id_Prof= $_SESSION['id'];
                                  JOIN 'classe' as c 
                                  on c.id= mc.id_Mat 
                                  ORDER BY c.name -->
+                           
                                 
-                                
-                                <?php $id_Cours=$_GET['id_Cours'];?>
-   <?php   $result = $db->query(" SELECT * FROM tableSC WHERE id_Cours='$id_Cours'");
+      <?php $id_Cours=$_GET['id_Cours'];?>
+   <?php   $result = $db->query(" SELECT * FROM tablesc WHERE id_Cours='$id_Cours'");
    
      if($result->num_rows > 0){
       
@@ -146,7 +161,7 @@ $id_Prof= $_SESSION['id'];
    <!-- DataTales Example -->
   <div class="card shadow col-xl-12 col-md-6 mb-4">
       <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Les support du cour</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Les supports du cour </h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -167,8 +182,8 @@ $id_Prof= $_SESSION['id'];
   <tbody>
     <?php while($row = $result->fetch_assoc()){?>
     <tr>
-      <th class="bg-dark" scope="row"><?php echo $i; ?></th>
-
+      <th class="bg-dark" scope="row"><?php echo $i ;?></th>
+    
 
      
       <td class="bg-success"  ><a   style="color:white;" href="<?php echo htmlspecialchars($row['nom'])?>">Voir Support Cours</a></td>
@@ -193,6 +208,9 @@ $id_Prof= $_SESSION['id'];
 
 
 <!-- java Script script-->
+<script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
          <script src="../EspaceProf/js/AjouterEtud.js?2"></script>
         <!-- Bootstrap core JavaScript-->
           <script src="../vendor/jquery/jquery.min.js"></script>

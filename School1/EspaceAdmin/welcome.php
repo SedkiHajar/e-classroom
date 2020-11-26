@@ -1,7 +1,22 @@
 <?php
 //session_start();
-   require_once '../database/dbConfig.php'; 
-   include('session.php');
+//error_reporting(0);
+include ('../lang/fb.php');
+require_once '../database/dbConfig.php';
+  require_once '../database/function.php';
+include("../function/func.php");
+include('session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
+   // if(session_destroy()) {
+   //    header("Location: login.php");
+   // }
+  
     $param = "dash" ;
    require 'defaultAdmin.php';
 
@@ -16,7 +31,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Welcome Admin</title>
+  <title><?=lang('14') ?></title>
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,6 +47,24 @@
     <!-- Le code par defaut -->
 <?php 
 
+/*function getEcoleofAdmin($id,$se,$from,$value){
+  global $db;
+  $sql="SELECT $se FROM $from where $id='$value'";
+  $row=mysqli_query($db,$sql);
+  extract($row);
+  $nomE = $nom;
+  
+  return $nomE;
+}*/
+
+$admin= $_SESSION['id'];
+// echo $admin;
+// echo ' ecole est: '.getEcoleofAdmin("id","nomE","admin",$admin);
+
+
+
+
+
 /*for ($j = 0; $j <count($_SESSION['nom_Mat']); $j++){
     echo $_SESSION['nom_Mat'][$j];
    }*/
@@ -45,39 +78,47 @@
  }?>
 
 
-   <div class="col-md-12">
-   <!-- <form action="welcome.php?id_anneeS=<?php echo ($_SESSION['anneeS']);?> " role="form" method="post" enctype="multipart/form-data">
-   <div class="col-xl-12 col-md-6 mb-4"> -->
    
-              <!-- <label for="classe">Année scolaire</label>
+<h2 class="m-0 font-weight-bold text-primary " > <?php  echo strtoupper(lang('1')) .' '.
+ strtoupper($login_session).' '.lang('welcome'); ?></h2>  <!-- DANS VOTRE ESPACE DIRECTION -->
+
+ 
+ <form action=" " role="form" method="post" enctype="multipart/form-data">
+           
+           <div class="form-row">
+              
+                <h4><?=lang('12') ?></h4> 
+               
               <select class="custom-select" name="anneeS" id="">
-                <option selected value="<?php echo $_SESSION['anneeS']; ?>">Choisir l'année scolaire</option>
+                <option value="null"><?=lang('11') ?></option>
                   <?php
                   //définir la requete
-                  $result = $db->query("SELECT * FROM anneeS ");
-               
+                  $result = $db->query("SELECT * FROM annees where idAdm=$admin ");
+
                   // boucle sur les données
                   ?>
                   <?php while ($row =$result->fetch_assoc()) {
                   ?>
-                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nom']; ?>
+                   <option value="<?php echo $row['idAn']; ?>"
+                                  <?php if( isset($_SESSION['anneeS']) && $row['idAn']==$_SESSION['anneeS']) echo "selected" ?>>
+                                  <?php echo $row['nomA']; ?></b>
                    </option>
                  <?php
                }
                ?>
-              </select> -->
-             <!--  <button type="submit" class="btn btn-info" name="insererA">CHOISIR</button>
-  </form> -->
-</div>
+              </select>
          
+          
+              <button type="submit" class="btn btn-info" name="insererA"><?=lang('choix') ?></button>
+              <?php //echo  'session:' .$_SESSION['anneeS'];?>
+          </div>
+        
+  </form>
 
-<h1 class="m-0 font-weight-bold text-primary " >BIENVENUE DANS L'ESPACE ADMIN</h1><br>
- 
-
-<?php  
- $id=$_SESSION['anneeS'];
+  <?php 
+  //echo $id;        
   //echo 'anne : '.$id_anneeS;
-  $result = $db->query("SELECT * FROM professeur  where anneeS='$id'");
+  $result = $db->query("SELECT * FROM professeur  where anneeS='$id' and id_admin='$admin'");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
@@ -96,11 +137,12 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          <?php // print_r($_SESSION); ?>
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gestion des professeurs</h1>
            
-          </div>
+          </div> -->
           <!-- Content Row -->
           <div class="row">
             <!-- Earnings (Monthly) Card Example -->
@@ -109,11 +151,13 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Professeurs inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <?=lang('profs') ?><!-- Professeurs inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrEtudiant; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                      <i class="fas fa-users fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -125,11 +169,13 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">Femmes inscrites</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 "><?=lang('women') ?>
+                      <!-- Femmes inscrites --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                      <i class="fas fa-female fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -141,11 +187,14 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Hommes Inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <?=lang('men') ?>
+                        <!-- Hommes Inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                      <i class="fas fa-user-tie fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -163,7 +212,7 @@
 
 
 
-<?php   $result = $db->query("SELECT * FROM etudiant where anneeS='$id'");
+<?php   $result = $db->query("SELECT * FROM etudiant where anneeS='$id' and id_admin=$admin");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
@@ -183,10 +232,10 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+         <!--  <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gestion des etudiants</h1>
             
-          </div>
+          </div> -->
           <!-- Content Row -->
           <div class="row">
             <!-- Earnings (Monthly) Card Example -->
@@ -195,11 +244,12 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Eleve inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?=lang('stud') ?>
+                      <!-- Eleve inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrEtudiant; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -211,11 +261,12 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">Filles inscrites</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 "><?=lang('girl') ?>
+                      <!-- Filles inscrites --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-female fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -227,11 +278,12 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Garcon Inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?=lang('boy') ?>
+                      <!-- Garcon Inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-user fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -246,22 +298,22 @@
 
 
 
-<?php   $result = $db->query("SELECT * FROM classe where anneeS='$id' ");
+<?php   $result = $db->query("SELECT * FROM classe c join annees a  where a.idAn='$id' and a.idAdm=$admin and c.anneeS=a.idAn  ");
      $nbrClass=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrClass++;}
        ?>
 
-<?php   $result = $db->query("SELECT * FROM matiere m join classe c join matclass t
- where c.anneeS='$id' and m.id=t.id_Mat and t.id_Class=c.id ");
+<?php   $result = $db->query("SELECT * FROM matiere m join classe c join matclass t join annees e 
+ where c.anneeS='$id' and m.id=t.id_Mat and t.id_Class=c.id  and e.idAdm=$admin and e.idAn=c.anneeS ");
      $nbrMat=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrMat++;}
        ?>
 
-<?php   $result = $db->query("SELECT * FROM professeur where anneeS='$id' ");
+<?php   $result = $db->query("SELECT * FROM professeur where anneeS='$id' and id_admin=$admin");
      $nbrprof=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
@@ -273,10 +325,10 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gestion des Classes et Matieres</h1>
             
-          </div>
+          </div> -->
 
           <!-- Content Row -->
           <div class="row">
@@ -287,11 +339,13 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Nombre de Classes</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?=lang('class') ?>
+                      <!-- Nombre de Classes --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrClass; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-university fa-2x text-green-300"></i>
+                     <!--  <i class="fas fa-users-class"></i> -->
                     </div>
                   </div>
                 </div>
@@ -304,11 +358,12 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">Nombre de Matieres</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 "><?=lang('mat') ?>
+                     <!--  Nombre de Matieres --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrMat; //}?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-calendar fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>

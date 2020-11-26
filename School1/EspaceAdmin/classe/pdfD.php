@@ -1,7 +1,12 @@
 <?php 
+
 session_start();
+error_reporting(0);
+include ('../../lang/fb.php');
 // Include the database configuration file  
 require_once '../../database/dbConfig.php'; 
+ require_once '../../database/function.php';
+include("../../function/func.php");
 // Get image data from database 
  $id_Devoir=$_GET['id_Devoir'];
  $id_Class=$_GET['id_Class'];

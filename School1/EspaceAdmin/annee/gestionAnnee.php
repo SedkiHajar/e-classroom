@@ -1,8 +1,19 @@
 <?php
-   error_reporting(0); 
+   error_reporting(0);
+   include ('../../lang/fb.php');
    //session_start();
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
+
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +30,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -27,14 +40,14 @@
 
 </head>
 <body>
- <?php $param = "gesA" ;?> 
+ <?php $param = "gesA" ;?>
 <?php require '../defaultAdmin.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
 <!-- slect info from table -->
-<?php   
-$id=$_SESSION['anneeS'];
-$result = $db->query("SELECT * FROM professeur  where anneeS=$id");
+<?php
+$id=$_SESSION['anneeS'];$admin=$_SESSION['id'];
+$result = $db->query("SELECT * FROM professeur  where anneeS='$id' and id_admin='$admin'");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
@@ -56,7 +69,7 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gestion des professeurs</h1>
-           
+
           </div>
           <!-- Content Row -->
           <div class="row">
@@ -70,7 +83,7 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrEtudiant; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -86,7 +99,7 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-female fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -102,7 +115,7 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-user-tie fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -111,12 +124,12 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
   <!-- visualiser les etudiant dans un tableaux -->
     <!-- Appel de la base de dennée -->
     <!-- slect info from table -->
-   <?php   $result = $db->query("SELECT * FROM anneeS ");
+   <?php   $result = $db->query("SELECT * FROM annees where idAdm=$admin ");
      if($result->num_rows > 0){
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
       <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Les années scolaires</h6>
       </div>
@@ -126,7 +139,7 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
             <thead  class="table table-hover table-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">ID</th>
+      <!-- <th scope="col">ID</th> -->
       <th scope="col">ANNEE SCOLAIRE</th>
       <th scope="col">MODIFIER</th>
       <th scope="col">SUPPRIMER</th>
@@ -136,10 +149,10 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
     <?php while($row = $result->fetch_assoc()){?>
     <tr>
       <th class="bg-dark" scope="row"><?php echo $i; ?></th>
-      <td class=""><?php echo $row['id']; ?></td>
-      <td class=""><?php echo $row['nomA']; ?></td>  
-      <td class="bg-success"><a  style="color:white;" href="infoAnnee.php?id=<?php echo ($row['id']); ?>" >modifier</a></td>
-      <td class="bg-danger"><a   style="color:white;" href="uploadAnnee.php?id=<?php echo ($row['id']); ?>&amp;choix=delete">suprimer</a></td>
+      <!-- <td class=""><?php echo $row['id']; ?></td> -->
+      <td style="color:#130f40"  class=""><?php echo $row['nomA']; ?></td>
+      <td  class=""><a class="btn btn-success" style="color:white;" href="infoAnnee.php?id=<?php echo ($row['idAn']); ?>" ><i class='fa fa-edit'></i>modifier</a></td>
+      <td class=""><a class="btn btn-danger confirm"  style="color:white;" href="uploadAnnee.php?id=<?php echo ($row['idAn']); ?>&amp;choix=delete"><i class='fa fa-close'></i>supprimer</a></td>
       <?php $i++; ?>
       <?php } ?>
     </tr>
@@ -156,6 +169,11 @@ $result = $db->query("SELECT * FROM professeur  where anneeS=$id");
 
 
 </script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+
+ <script src="../js/jquery.js"></script>
 
 <!-- java Script script-->
  <script src="../js/AjouterEtud.js?2"></script>

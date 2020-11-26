@@ -1,6 +1,18 @@
 <?php
+error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
+
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 
 <!DOCTYPE html>
@@ -14,11 +26,11 @@
   <meta name="author" content="">
 
   <title>AjouterProf</title>
-
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
@@ -27,25 +39,34 @@
 </head>
 <body>
 <?php 
-$param = "ajoP" ;
+$param = "" ;
 require '../defaultAdmin.php';?>
 <!-- debut de profile  -->
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>
   <div id="info">
 <!-- slect info from table -->
-<?php $CIN=$_GET['CIN']; ?>
+<?php $CIN=$_GET['CIN'];
+$admin=$_SESSION['id'];
+ ?>
+ <a href="gestionProf.php"><i class="fas fa-arrow-circle-left"></i><?=lang('7') ?><!-- Retour --></a>
 <?php   $result = $db->query("SELECT * FROM professeur WHERE CIN='$CIN' ");
 
  if($result->num_rows > 0){?>
    <?php while($row = $result->fetch_assoc()){?>
-   <a href="gestionProf.php"><i class="fas fa-arrow-circle-left"></i>Retour</a>
+   
 <div class="container emp-profile">
             <form >
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img ">
-                            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" alt=""/>
+                           <?php if($row['avatarP']=='0' or empty($row['avatarP'])) { 
+                   echo " <img src='uploads/avatars/user.png' alt=''/>"; }
+                   else{
+                     echo " <img src='uploads/avatars/".$row['avatarP']."' alt=''/>"; 
+                   }
+                          ?>
+                            <!-- <img src="data:image/jpg;charset=utf8;base64,<?php //echo base64_encode($row['image']); ?>" alt=""/> -->
                             
                         </div>
                     </div>
@@ -63,7 +84,7 @@ require '../defaultAdmin.php';?>
                         </div>
                     </div>
                     <div class="col-md-2">
-                      <a  onclick="switche()" href="#"  class="btn btn-primary " >Modifier profil </a>
+                      <a  onclick="switche()" href="#"  class="btn btn-primary " ><i class="fa fa-edit"></i><?= lang('editP') ?> </a>
                       <!--  <a   href="../classe/infoMatieres.php?id_prof=<?php echo ($row['CIN']); ?>"  class="btn btn-primary " >voir mes matieres </a> -->
                       <br>
               
@@ -150,7 +171,7 @@ require '../defaultAdmin.php';?>
                                             </div>
                                             <div class="col-md-6">
                                               <?php $id_anneeS= $row['anneeS']?>                      
-                                <?php   $result1 = $db->query("SELECT nomA FROM anneeS WHERE id='$id_anneeS'");?>  
+                                <?php   $result1 = $db->query("SELECT nomA FROM annees WHERE idAn='$id_anneeS'");?>  
                                 <?php while($row1 = $result1->fetch_assoc()){?> 
                                                 <p><?php echo $row1['nomA']; ?></p><?php } ?>
                                             </div>
@@ -215,31 +236,36 @@ require '../defaultAdmin.php';?>
             <div id="update">
               <!-- Appel de la base de dennée -->
               <!-- slect info from table -->
-
+              <a href="infoProf.php?CIN=<?=$CIN?>&choix=insertion"><i class="fas fa-arrow-circle-left"></i><?=lang('7') ?><!-- Retour --></a>
               <?php   $result = $db->query("SELECT * FROM professeur WHERE CIN='$CIN' ");
                if($result->num_rows > 0){?>
                  <?php while($row = $result->fetch_assoc()){?>
               <div class="container emp-profile">
-                        <form action="uploadProf.php"  role="form" method="post" enctype="multipart/form-data">
+                        <form action="uploadProf.php?CIN=<?=$CIN?>"  role="form" method="post" enctype="multipart/form-data">
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="profile-img ">
-                                          <img id="output" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" alt=""/>
-                                           <?php $_SESSION['image']=$row['image'];?>
-                                          <div class="file btn btn-lg btn-primary">
+                                        <div class="form-group">
+                                           <label style="color:#eb4d4b">Changer image</label>
+                                           <input type="file" name="image" required="required" value="<?=$row['avatarP']?> " />
+                                           <?php $_SESSION['image']=$row['avatarP'];?>
+                                        </div>   
+                                         <!--  <img id="output" src="data:image/jpg;charset=utf8;base64,<?php //echo base64_encode($row['image']); ?>" alt=""/> -->
+                                           
+                                          <!-- <div class="file btn btn-lg btn-primary">
                                               <button class="btn btn-primary" >Changer image
                                               
                                               <input type="file"  accept="image/*" name="image" id="image"  onchange="loadFile(event)" >
                                             </button>
                                           </div>
-
+ -->
                                       </div>
                                   </div>
                                   <div class="col-md-6">
                                       <div class="profile-head">
                                                   <h2 class=" font-weight-bold text-info  shadow  titre">
                                                     <input class="form-control" name="nom" value="<?php echo $row['nom']?> ">
-                                                      <input class="form-control" name="prenom" value="<?php echo $row['prenom']?> ">
+                                                    <input class="form-control" name="prenom" value="<?php echo $row['prenom']?> ">
                                                   </h2>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                                               <li class="nav-item">
@@ -278,7 +304,7 @@ require '../defaultAdmin.php';?>
                                                               <label>Code Postal</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p>  <input class="form-control" type="text" name="codeP" value=" <?php echo $row['codePostal']; ?> ">  </p>
+                                                              <p>  <input class="form-control" type="text" name="codeP" value="<?=$row['codePostal']; ?>">  </p>
                                                           </div>
                                                       </div>
                                                       <div class="form-row">
@@ -286,7 +312,7 @@ require '../defaultAdmin.php';?>
                                                               <label >Adresse</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p><input class="form-control" type="text" name="adresse" value=" <?php echo $row['adresse']; ?>" ></p>
+                                                              <p><input class="form-control" type="text" name="adresse" value="<?=$row['adresse']; ?>" ></p>
                                                           </div>
                                                       </div>
                                                       <div class="form-row">
@@ -294,7 +320,7 @@ require '../defaultAdmin.php';?>
                                                               <label>Date de naissance</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p><input class="form-control" type="date" name="dateN" value="<?php echo $row['dateN'];?>"></p>
+                                                              <p><input class="form-control" type="date" name="dateN" value="<?=$row['dateN'];?>"></p>
                                                           </div>
                                                       </div>
                                                       <div class="form-row">
@@ -302,7 +328,7 @@ require '../defaultAdmin.php';?>
                                                               <label>Ville de naissance</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p><input class="form-control" type="text"  name="villeN" value=" <?php echo $row['villeN']; ?> "></p>
+                                                              <p><input class="form-control" type="text"  name="villeN" value="<?=$row['villeN'];?>"></p>
                                                           </div>
                                                       </div>
                                                       <div class="form-row">
@@ -310,7 +336,7 @@ require '../defaultAdmin.php';?>
                                                               <label >Email</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p><input class="form-control" type="email" name="email" value=" <?php echo $row['mail']; ?> "></p>
+                                                              <p><input class="form-control" type="email" name="email" value="<?=$row['mail'];?>"></p>
                                                           </div>
                                                       </div>
                                                       <div class="form-row">
@@ -318,17 +344,17 @@ require '../defaultAdmin.php';?>
                                                               <label>Telephone</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p><input class="form-control" type="tel" name="tel" value=" <?php echo $row['tel']; ?> "></p>
+                                                              <p><input class="form-control" type="tel" name="tel" value="<?=$row['tel'];?>"></p>
                                                           </div>
                                                       </div>
-                                                      <div class="form-row">
+                                                      <!-- <div class="form-row">
                                                           <div class="col-md-6">
                                                               <label>CIN</label>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <p><input  id="a" class="form-control" type="text" name="CIN"  value=" <?php echo $row['CIN']; ?>" > </p>
+                                                              <p><input  id="a" class="form-control" type="text" name="CIN"  value="<?//$row['CIN']; ?>" > </p>
                                                           </div>
-                                                      </div>
+                                                      </div> -->
                                                       <div class="form-row">
                                                           <div class="col-md-6">
                                                               <label>Sexe</label>
@@ -336,9 +362,11 @@ require '../defaultAdmin.php';?>
                                                           <div class="col-md-6">
                                                               <p>
                                                                   <select class="custom-select" name="sexe" id="">
+                                                                    
 
-                                                                <option  value=" <?php echo $row['sexe']; ?> ">Feminin</option>
-                                                                <option value="masculin">Masculin</option>
+                                                                <option  value="<?=$row['sexe'];?>"><?=$row['sexe'];?></option>
+                                                                <option value="<?php if($row['sexe']=='masculin') echo 'feminin';else echo 'masculin'?>">
+                                                                  <?php if($row['sexe']=='masculin') echo 'feminin';else echo 'masculin'?></option>
                                                                 </select>
                                                                <!--  <input class="form-control" type="text" name="sexe" value=" <?php echo $row['sexe']; ?> "></p> -->
                                                           </div>
@@ -348,22 +376,22 @@ require '../defaultAdmin.php';?>
                                                           
                                                               
                                                               <?php $id_anneeS= $row['anneeS']?>                      
-                                                   <?php   $result1 = $db->query("SELECT nomA FROM anneeS WHERE id='$id_anneeS'");?>  
+                                                   <?php   $result1 = $db->query("SELECT * FROM annees WHERE idAn='$id_anneeS'");?>  
                                                 <?php while($row1 = $result1->fetch_assoc()){?> 
                                                 <div class="col-md-6">
                                                               <label for="classe">Année scolaire</label>
                                                 </div>
                                                 <div class="col-md-6">              
-                                                             <select class="custom-select" name="anneeS[]" id="">
-                                                               <option selected value="-1"><?php echo $row1['nomA']; ?></option><?php } ?>
+                                                             <select class="custom-select" name="anneeS" id="">
+                                                               <option selected value="<?=$row1['idAn']; ?>"><?php echo $row1['nomA']; ?></option><?php } ?>
                                                               <?php
                 
-                                                            $result = $db->query("SELECT * FROM anneeS ");
+                                                            $result = $db->query("SELECT * FROM annees WHERE idAdm=$admin");
                 
                                                                ?>
                                                              <?php while ($row =$result->fetch_assoc()) {
                                                                ?>
-                                                       <option value="<?php echo $row['id']; ?>"><?php echo $row['nomA']; ?>
+                                                       <option value="<?php echo $row['idAn']; ?>"><?php echo $row['nomA']; ?>
                                                        </option>
                                                        <?php
                                                         }
@@ -372,7 +400,7 @@ require '../defaultAdmin.php';?>
                                                         </div>        
                                                           <div class="col-md-6">      
                                                            <button class="btn btn-primary" type="submit" name="modifier" 
-                                                    value="update">Modifier</button>     
+                                                    value="update"><i class="fa fa-edit"></i> <?=lang('edit') ?></button>     
                                                           </div>
 
     

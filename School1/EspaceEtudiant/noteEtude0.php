@@ -1,6 +1,24 @@
 <?php
-   //session_start();
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+/*require_once '../database/dbConfig.php'; 
+require_once '../database/function.php';
+include ('../lang/fb.php');
+include("../function/func.php");
+
    include('session.php');
+   if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +71,10 @@ $id_Class=$_SESSION['id_class'];
 
 
 <!-- java Script script-->
-<script src="js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- <script src="js/AjouterEtud.js?2"></script> -->
 <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

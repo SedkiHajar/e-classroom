@@ -1,8 +1,17 @@
 <?php
-   error_reporting(0); 
-   //session_start();
+   error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+    require_once '../../database/function.php';
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +28,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
@@ -52,16 +62,16 @@ require '../defaultAdmin.php';?>
 <!-- slect info from table -->
 
 <?php 
-    $id=$_SESSION['anneeS'];
-    $result = $db->query("SELECT * FROM classe where anneeS='$id' ");
+    $id=$_SESSION['anneeS'];$admin=$_SESSION['id'];
+    $result = $db->query("SELECT * FROM classe c join annees a  where a.idAn='$id' and a.idAdm=$admin and c.anneeS=a.idAn   ");
      $nbrClass=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrClass++;}
        ?>
 
-<?php   $result = $db->query("SELECT * FROM matiere m join classe c join matclass t
- where c.anneeS='$id' and m.id=t.id_Mat and t.id_Class=c.id ");
+<?php   $result = $db->query("SELECT * FROM matiere m join classe c join matclass t join annees e 
+ where c.anneeS='$id' and m.id=t.id_Mat and t.id_Class=c.id  and e.idAdm=$admin and e.idAn=c.anneeS");
  //SELECT * FROM matiere m join classe c join matclass t where c.anneeS=10 and m.id=t.id_Mat and t.id_Class=c.id
      $nbrMat=0;
       ?>
@@ -69,7 +79,7 @@ require '../defaultAdmin.php';?>
       $nbrMat++;}
        ?>
 
-<?php   $result = $db->query("SELECT * FROM professeur  where anneeS='$id' ");
+<?php   $result = $db->query("SELECT * FROM professeur  where anneeS='$id' and id_admin=$admin ");
      $nbrprof=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
@@ -158,17 +168,85 @@ require '../defaultAdmin.php';?>
                 <div id="form" class="shadow " style="margin-top:20px;">
                <!--pour les classes-->
                 <div class="form-row">
-                   <div class="form-group col-md-6" id="ajoutC">
-                       <label for="nom">Nom De la classe </label>
-                        <input type="text" class="form-control"  name="nomC[]" required  >
-                   </div>
+                  <!-- <div class="courses_inputs_div"> -->
+                    <div class="form-group col-md-6">
+                     <table><tbody id="ajoutC">
+                         <tr id="classC" >
+                            <td>
+                              <label for="nom">Nom De la classe </label>
+                              <input type="text" class="form-control"  name="nomC[]" required  >
+                            </td>
+                            <td><a class="btn btn-danger" onclick="SupprimerC('classC')"><i style="color:white" class="fa fa-close"></i></a></td>
+                         </tr>
+                     <!-- </div> -->
+                  </tbody></table>
+                  </div>
+                  
+                  <!-- <button class="btn btn-success add_more_courses">ajoy</button>  -->  
+
                    <div class="form-group col-md-6" id="ajoutC1"></div>
                    <a href="#ajouC1" class="btn btn-primary" onclick="AjouterC()">Ajouter Classe</a>
               </div>
               <h3 class=" font-weight-bold text-info text-center shadow  titre"> Ajouter des Matiere/prof pour les classes selectionné </h3>
+             <!-- test matire -->
+              <!--pour les matieres-->
+                <div class="form-row">
+                  <!-- <div class="courses_inputs_div"> -->
+                    <div class="form-group">
+                     <table><tbody id="ajoutM">
+                         <!-- <tr id="matM" > -->
+                        <tr id="matM">
+                          
+                            <td >
+                              <label for="nom">Nom De la matière </label>
+                              <input type="text" class="form-control"  name="nomM[]" required  >
+                            </td>
+                          
+                          
+                            <td >
+                              <label for="nom">Coef De la MATIERE </label>
+                              <input type="number" class="form-control"  name="coef[]"  required>
+                            </td>
+                          
+                            <td>
+                              <!-- <label for="nom">Nom Du Professeur </label> -->
+                            
+                             
+                                <select class="custom-select" name="CIN[]" id="">
+                                  <option selected value="-1">sélectionner le professeur</option>
+                                  <?php
+                                //définir la requete
+                                 $result = $db->query("SELECT * FROM professeur where id_admin=$admin ");?>
+                                 
+                                 // boucle sur les données
+                                 <?php while ($row =$result->fetch_assoc()) {
+                                 ?>
+                                 <option value="<?php echo $row['CIN']; ?>"><?php echo $row['nom'].'   ' .$row['prenom']; ?>
+                                     
+                                 </option>
+                            
+                                      <?php
+                                     }
+                                     ?>
+                                </select>
+                            </td>
+                          
+                            <td>
+                              <a class="btn btn-danger" onclick="SupprimerM('matM')"><i style="color:white" class="fa fa-close"></i></a>
+                            </td>
+                          </tr>  
+                          
+                         <!-- </tr> -->
+                     <!-- </div> -->
+                  </tbody></table>
+                  </div>
+
+
+
               <div class="form-row " id="ajoutM">
                  <!--pour les matierez-->
-                  <div class="form-group col-md-3" >
+                  <!-- <div class="form-group col-md-3" >
+                   
                        <label for="nom">Nom De la MATIERE </label>
                         <input type="text" class="form-control"  name="nomM[]"  required>
                   </div>
@@ -177,31 +255,34 @@ require '../defaultAdmin.php';?>
                         <input type="number" class="form-control"  name="coef[]"  required>
                    </div>
               
-              <div class="form-group col-md-6" >
-              <label for="nom">Nom Du Professeur </label>
-              <select class="custom-select" name="CIN[]" id="">
-                <option selected value="-1">sélectionner le professeur</option>
-                <?php
-              //définir la requete
-               $result = $db->query("SELECT * FROM professeur ");?>
-               
-               // boucle sur les données
-               <?php while ($row =$result->fetch_assoc()) {
-               ?>
-               <option value="<?php echo $row['CIN']; ?>"><?php echo $row['nom'].'   ' .$row['prenom']; ?>
-                   
-               </option>
+                    <div class="form-group col-md-6" >
+                    <label for="nom">Nom Du Professeur </label>
+                    <select class="custom-select" name="CIN[]" id="">
+                      <option selected value="-1">sélectionner le professeur</option> -->
+                      <?php
+                    //définir la requete
+                    // $result = $db->query("SELECT * FROM professeur where id_admin=$admin ");?>
+                     
+                     <!-- boucle sur les données -->
+                     <?php // while ($row =$result->fetch_assoc()) {
+                     ?>
+                     <!-- <option value="<?php echo $row['CIN']; ?>"><?php echo $row['nom'].'   ' .$row['prenom']; ?>
+                         
+                     </option> -->
                 
                 <?php
-               }
+              // }
                ?>
-              </select>
-
+              <!-- </select> -->
+             <!--  <a class="btn btn-danger" onclick="SupprimerM('ajoutM')"><i style="color:white" class="fa fa-close"></i></a>
+            </div> -->
                
             </div>
              </div>
              <div class="form-row" id="ajoutM1"></div>
             <a href="#ajouM1" class="btn btn-primary" onclick="AjouterM()">Ajouter matiere</a>
+           <!--  <a href="javascript:delElem('ajouM1', 'test');" title="Supprimer">Supprimer</a> -->
+           
       </div>
                    
 
@@ -210,21 +291,50 @@ require '../defaultAdmin.php';?>
           
         </div>
         <div id="AjoutDeform"></div>
-       <button class="btn btn-primary" type="submit" name="inserer">submit</button>
+       <button type="submit" class="btn btn-primary col-sm-4" name="inserer"><i class="fas fa-plus-circle"></i> 
+       <!-- submit --><?= lang('ajout')?></button>
+       <button type="reset" class="btn btn-danger col-sm-4"><?=lang('res') ?></button>  
 </form>
   </body>
   </html>
   <script>
+    var indexOfClass = 0 ;
     function AjouterC() {
-  var classe=document.getElementById("ajoutC").innerHTML;
-  document.getElementById("ajoutC1").innerHTML+=classe;
-}
-function AjouterM() {
-  var classe=document.getElementById("ajoutM").innerHTML;
-  document.getElementById("ajoutM1").innerHTML+=classe;
-}
+      indexOfClass++ ;
+      var classe= document.createElement('tr');
+      var textClasse = document.getElementById("classC").innerHTML ;
+      classe.setAttribute("id","classC"+indexOfClass)
+      classe.innerHTML = textClasse.replace("classC","classC"+indexOfClass)
+      var classeMere = document.getElementById("ajoutC");
+      classeMere.appendChild(classe) ;
+    }
+    function SupprimerC(idC){
+      var classe = document.getElementById(idC);
+      classe.parentNode.removeChild(classe) ;
+    }
+    // function AjouterM() {
+    //   var classe=document.getElementById("ajoutM").innerHTML;
+    //   document.getElementById("ajoutM1").innerHTML+=classe;
+    // }
+
+    function AjouterM() {
+      indexOfClass++ ;
+      var classe= document.createElement('tr');
+      var textClasse = document.getElementById("matM").innerHTML ;
+      classe.setAttribute("id","matM"+indexOfClass)
+      classe.innerHTML = textClasse.replace("matM","matM"+indexOfClass)
+      var classeMere = document.getElementById("ajoutM");
+      classeMere.appendChild(classe) ;
+    }
+    function SupprimerM(idM){
+      var classe = document.getElementById(idM);
+      classe.parentNode.removeChild(classe) ;
+    }
+
 
   </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery.js"></script>
 <!-- java Script script-->
  <script src="../js/AjouterEtud.js"></script>
 <!-- Bootstrap core JavaScript-->

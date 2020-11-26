@@ -1,7 +1,18 @@
 <?php
    error_reporting(0);
-   require_once '../../database/dbConfig.php';
+   
+include ('../../lang/fb.php');
+require_once '../../database/dbConfig.php';
+require_once '../../database/function.php';
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +38,14 @@
 </head>
 <body>
 <?php require '../defaultAdmin.php';?>
+<?php   $do=isset($_GET['do']) ? $_GET['do'] :'default';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php';
 $id_Etudiant=$_GET['CIN']; 
+$sql = mysqli_query($db,"SELECT * from etudiant where CIN = '$id_Etudiant'  ");
+$nome = mysqli_fetch_array($sql,MYSQLI_ASSOC);
+$etu=$nome['nomE'];
+$pre=$nome['prenom'];
 $justif=$_POST['justif'];
 $id_Abs=$_POST['id_abs'];
 $an=$_SESSION['anneeS'];
@@ -48,8 +64,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }
+//if($do!='abs'){
 $result2 = $db->query("SELECT DISTINCT matiere.nom,matiere.id FROM matiere INNER JOIN abs ON matiere.id = abs.id_mat WHERE abs.id_etudiant='$id_Etudiant'");  
                     echo $db->error;
+                    if($result2->num_rows > 0){
                     while ($row2 =$result2->fetch_assoc()) {
                         $id_Mat=$row2['id'];
                         ?>
@@ -95,7 +113,9 @@ $result2 = $db->query("SELECT DISTINCT matiere.nom,matiere.id FROM matiere INNER
               <form>
                  <?php $url=$_SERVER['HTTP_REFERER'];?>
                     <a href="<?php echo $url;?>" class="btn btn-info">retour à la table d'absences</a>
-
+<?php } else echo '<div style="background-color:#FAEBD7; font-size:40px; border-color: #849460 ;border-style:solid;
+          border-width: 2px; border-radius: 10px; width:900px;height:200px; margin:auto; text-align:center; padding-left:20px;">'."Il n y a aucune absence pour l'étudiant ".ucwords($etu)." ".ucwords($pre)."</div>";
+           ?>
 <!-- java Script script-->
 <script src="../js/AjouterEtud.js?2"></script>
 <!-- Bootstrap core JavaScript-->

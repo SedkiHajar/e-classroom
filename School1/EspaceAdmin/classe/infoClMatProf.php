@@ -1,7 +1,19 @@
 <?php
-   //session_start();
+  error_reporting(0);
+include ('../../lang/fb.php');
+
+require_once '../../database/function.php';
+
+include("../../function/func.php");
    require_once '../../database/dbConfig.php';
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +30,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" rel="stylesheet">
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
@@ -46,23 +60,23 @@ require '../defaultAdmin.php';?>
 
 
 <?php  
- $id=$_SESSION['anneeS'];
- $result = $db->query("SELECT * FROM classe where anneeS='$id' ");
+ $id=$_SESSION['anneeS'];$admin=$_SESSION['id'];
+ $result = $db->query("SELECT * FROM classe c join annees a  where a.idAn='$id' and a.idAdm=$admin and c.anneeS=a.idAn  ");
      $nbrClass=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrClass++;}
        ?>
 
-<?php   $result = $db->query("SELECT * FROM matiere m join classe c join matclass t
- where c.anneeS='$id' and m.id=t.id_Mat and t.id_Class=c.id ");
+<?php   $result = $db->query("SELECT * FROM matiere m join classe c join matclass t join annees e 
+ where c.anneeS='$id' and m.id=t.id_Mat and t.id_Class=c.id  and e.idAdm=$admin and e.idAn=c.anneeS ");
      $nbrMat=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
       $nbrMat++;}
        ?>
 
-<?php   $result = $db->query("SELECT * FROM professeur where anneeS='$id' ");
+<?php   $result = $db->query("SELECT * FROM professeur where anneeS='$id' and id_admin=$admin");
      $nbrprof=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
@@ -177,25 +191,25 @@ require '../defaultAdmin.php';?>
       <?php   $result1 = $db->query("SELECT * FROM matiere WHERE id='$id_Mat'");?>
       
       <?php while($row1 = $result1->fetch_assoc()){?> 
-      <td class=""><a href="infoCours.php?id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>"><?php echo $row1['nom']; ?></a></td><?php } ?>
+      <td style="color:#130f40"  class=""><a href="infoCours.php?id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>"><?php echo $row1['nom']; ?></a></td><?php } ?>
 
 
           <?php $id_Mat= $row['id_Mat']?>
           <?php $result2 = $db->query("SELECT coef FROM matiere WHERE id='$id_Mat' ");?>
           <?php while ($row2 =$result2->fetch_assoc()) {?>
-           <td class=""><?php echo $row2['coef']; ?>
+           <td style="color:#130f40" class=""><?php echo $row2['coef']; ?>
        <?php } ?>     
       </td>
 
      <?php $id_prof= $row['id_prof']?>  
       <?php   $result1 = $db->query("SELECT nom,prenom FROM professeur WHERE CIN='$id_prof'");?>
       <?php while($row1 = $result1->fetch_assoc()){?> 
-      <td class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>
+      <td style="color:#130f40" class=""><?php echo $row1['nom']."   " . $row1['prenom']?></td><?php } ?>
       
      <!--  <td class="bg-info"><a   style="color:white;" href="AjouterCours.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Ajouter Cours</a></td> -->
      
      
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer">suprimer</a></td> 
+      <td style="color:#130f40" ><a class="btn btn-danger confirm"   style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer"><i class="fa fa-close"></i>suprimer</a></td> 
       <?php $i++; ?>
       <?php } ?>
     </tr>
@@ -232,7 +246,9 @@ require '../defaultAdmin.php';?>
 
                         }
                       </script>
-
+    
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery.js"></script>
 
         <!-- java Script script-->
          <script src="../js/AjouterEtud.js?2"></script>

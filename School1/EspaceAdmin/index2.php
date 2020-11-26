@@ -3,8 +3,11 @@
 		// login pages actions
 		if ($_GET['action'] == 'logout')
 		{
-			session_destroy() ;
-			header("location:../index.php");
+			session_unset();
+			session_destroy();
+			header("location:/School1/index.php");
+			//header("location:/index.php");
+			exit();
 			//getMenu() ;
 		}
 		}

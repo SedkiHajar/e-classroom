@@ -139,3 +139,31 @@
 
                                                       </div>
  -->
+  <div class="form-row">
+                  <div class="col-md-6">
+                                                              
+                    <?php $id_class= $row['classe']; //echo $id_class;                      
+                  $result1 = $db->query("SELECT * FROM classe WHERE id='$id_class'");  
+                   while($row1 = $result1->fetch_assoc()){?> 
+                                              
+                  <label for="classe">Classe</label>
+                                                                      
+                  </div>  
+               <div class="col-md-6">  
+               <select class="custom-select" name="classet" id="">
+              <option selected value="<?php echo $row1['id']; ?>" >
+                <?php echo $row1['nom']; ?></option><?php } 
+                
+            $result = $db->query("SELECT distinct c.id,c.nom FROM classe c join etudiant e where c.anneeS=e.anneeS ");
+                
+                                                              
+                while ($row =$result->fetch_assoc()) {
+                                                               ?>
+                    <option value="<?php echo $row['id']; ?>" ><?php echo $row['nom']; ?>
+                                  </option>
+                          <?php
+                                                        }
+                                                         ?>
+                                     </select>
+                             </div>
+             </div>

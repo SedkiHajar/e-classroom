@@ -1,6 +1,25 @@
 <?php
-  // session_start();
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+/*error_reporting(0);
+include ('../lang/fb.php');
+require_once '../database/dbConfig.php'; 
+require_once '../database/function.php';
+ include("../function/func.php");
+ 
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,10 +58,10 @@ require 'defaultEtud.php';
 </div> -->
 
          
-          <h1 class="m-0 font-weight-bold text-success " >BIENVENUE DANS L'ESPACE ETUDIANT</h1><br>
+          <h2 class="m-0 font-weight-bold text-success " >BIENVENUE <?php echo strtoupper($login_session); ?>  DANS VOTRE ESPACE ETUDIANT</h2>
       <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Statistiques</h1>
+            <!-- <h1 class="h3 mb-0 text-gray-800">Statistiques</h1> -->
             
           </div>
  <?php  $cin=$_SESSION['CIN'];
@@ -106,7 +125,7 @@ $id_Prof= $_SESSION['id'];
             </div>
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-4 col-md-6 mb-4">
+            <!-- <div class="col-xl-4 col-md-6 mb-4">
               <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -120,12 +139,15 @@ $id_Prof= $_SESSION['id'];
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
    
    
 <!-- java Script script-->
-<script src="js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Bootstrap core JavaScript-->
+
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

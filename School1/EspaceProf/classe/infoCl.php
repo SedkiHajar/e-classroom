@@ -1,7 +1,18 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +38,9 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require '../defaultProf.php';?>
+<?php 
+$param="gesC";
+require '../defaultProf.php';?>
 <!-- debut de profile  -->
 <!-- Appel de la base de dennée -->
 <?php require_once '../../database/dbConfig.php'; ?>

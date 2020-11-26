@@ -1,7 +1,19 @@
 <?php
-   //session_start();
+   error_reporting(0);
+
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
+
+include("../../function/func.php");
    include('../session.php');
+  if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,54 +35,27 @@
   <link href="../../css/css1.css" rel="stylesheet">
 </head>
 <body>
-<?php error_reporting(0);
+<?php //error_reporting(0);
 //require_once 'uploadProf.php'; ?>
       
 
 
 <?php 
 
- $param = "ajoP" ;
+$param = "ajoP" ;
 require '../defaultAdmin.php';
-require_once 'uploadProf.php';?>
+//require_once 'uploadProf.php';?>
 <!-- Appel de la base de dennée -->
-<?php require_once '../../database/dbConfig.php'; ?>
-
-
-<?php if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $_SESSION['anneeS'] = $_POST['anneeS'];
-    $id_anneeS=$_SESSION['anneeS'];
- }?>
+<?php  ?>
 
 
 
 
 
 
-   <div class="col-md-12">
-   <!-- <form action="AjouterProf.php" role="form" method="post" enctype="multipart/form-data">
-   <div class="col-xl-12 col-md-6 mb-4">
+
+
    
-              <label for="classe">Année scolaire</label>
-              <select class="custom-select" name="anneeS" id="">
-                <option selected value="<?php echo $id_anneeS; ?>">Choisir l'année scolaire</option> -->
-                  <!-- <?php
-                  //définir la requete
-                  $result = $db->query("SELECT * FROM anneeS ");
-               
-                  // boucle sur les données
-                  ?>
-                  <?php while ($row =$result->fetch_assoc()) {
-                  ?>
-                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nom']; ?>
-                   </option>
-                 <?php
-               }
-               ?>
-              </select>
-              <button type="submit" class="btn btn-info" name="insererA">CHOISIR</button>
-  </form> -->
-</div>
 
 
 
@@ -80,9 +65,9 @@ require_once 'uploadProf.php';?>
 <?php  
  //if (isset($_POST['insererA']) ) {
 
-$id=$_SESSION['anneeS'];
+$id=$_SESSION['anneeS'];$admin=$_SESSION['id'];
      
- $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id'");
+ $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id' and id_admin=$admin");
  //echo 'anne : '.$id;
   
      $nbrEtudiant=0;
@@ -120,7 +105,7 @@ $id=$_SESSION['anneeS'];
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrEtudiant; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -136,7 +121,7 @@ $id=$_SESSION['anneeS'];
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-female fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -152,7 +137,7 @@ $id=$_SESSION['anneeS'];
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon;//} ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                       <i class="fas fa-user-tie fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -193,7 +178,7 @@ $id=$_SESSION['anneeS'];
                   <input type="checkbox" aria-label="Checkbox for following text input" id="myCheck"onclick=" AjouterProf()">
                 </div>
               </div>
-              <input type="number" class="form-control" aria-label="Text input with checkbox"id="nbrEtudiant" value="1">
+              <input type="number" class="form-control" aria-label="Text input with checkbox" id="nbrEtudiant" value="1">
             </div>
           </div>
             <!--cors du formulaire-->
@@ -259,13 +244,13 @@ $id=$_SESSION['anneeS'];
                 <option selected value="-1">Choisir l'année scolaire</option>
                   <?php
                   //définir la requete
-                  $result = $db->query("SELECT * FROM anneeS ");
+                  $result = $db->query("SELECT * FROM annees where idAdm=$admin");
                
                   // boucle sur les données
                   ?>
                   <?php while ($row =$result->fetch_assoc()) {
                   ?>
-                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nomA']; ?>
+                   <option value="<?php echo $row['idAn']; ?>"><?php echo $row['nomA']; ?>
                    </option>
                  <?php
                }
@@ -290,7 +275,7 @@ $id=$_SESSION['anneeS'];
             
               <div class="form-group col-md-6">
                   <label for="societe">password</label>
-                  <input type="password" class="form-control" id="image" name="mdp[]" required>
+                  <input type="password" class="form-control" id="mdp" name="mdp[]" required>
               </div>
             </div>
            <div class="form-row">  
@@ -308,7 +293,9 @@ $id=$_SESSION['anneeS'];
         </div>
         <div id="AjoutDeform"></div>
         </div>
-       <button type="submit" class="btn btn-primary" name="inserer">submit</button>
+       <button type="submit" class="btn btn-primary col-sm-4" name="inserer"><i class="fas fa-plus-circle"></i> 
+       <!-- submit --><?= lang('ajout')?></button>
+       <button type="reset" class="btn btn-danger col-sm-4"><?=lang('res') ?></button>  
 </form>
         <?php //echo 'test';
        //  } ?>

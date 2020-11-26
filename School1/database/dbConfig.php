@@ -2,6 +2,10 @@
 // Database configuration 
 //Database configuration  
 $dbHost     = "localhost";  
+// $dbUsername = "bestmhro";  
+// $dbPassword = "5vLY9Io72dKH";  
+// $dbName     = "bestmhro_school"; 
+
 $dbUsername = "root";  
 $dbPassword = "";  
 $dbName     = "school";  

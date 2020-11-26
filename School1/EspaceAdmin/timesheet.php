@@ -1,8 +1,19 @@
 <?php
    //session_start();
+error_reporting(0);
+include ('../lang/fb.php');
     require_once '../database/dbConfig.php'; 
+    require_once '../database/function.php';
+include("../function/func.php");
 
    include('session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +26,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>AjouterEtudiant</title>
+  <title>emploi</title>
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,13 +43,16 @@
 $param = "time" ;
 require 'defaultAdmin.php';
 $id=$_SESSION['anneeS'];
+print($_SESSION['anneeS']);
+$do=isset($_GET['do'])?$do=$_GET['do']:$do='emp';
+if($do=='emp'){
 //echo 'ann:' . $_SESSION['anneeS'];
 ?>
 <!-- Appel de la base de dennée -->
 <!-- slect info from table -->
 <h3 class=" font-weight-bold text-info text-center shadow  titre" style="margin-top: 50px;"> Espace des emplois du temps </h3>
 <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="background-color:white;font-weight: bold; margin-top:100px;">
-    <form action="timesheet2.php?id_anneeS=<?php echo $_SESSION['anneeS'] ?>" role="form" method="post" enctype="multipart/form-data">
+    <form action="timesheet2.php?id_anneeS=<?= $id ?>&do=shed" role="form" method="post" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md-12" >
                 <label for="classe">Choisir une classe </label>
@@ -46,11 +60,12 @@ $id=$_SESSION['anneeS'];
                     <option selected value="-1">choisir la classe</option>
                     <?php
                     //définir la requete
-                    $result = $db->query("SELECT * FROM classe ");  
+                    $result = $db->query("SELECT * FROM classe c join annees a where a.idAn=c.anneeS and a.idAdm=$admin ");  
                     // boucle sur les données
                     while ($row =$result->fetch_assoc()) {
+
                     ?>
-                    <option value="<?php echo $row['id']; ?>"><?php echo $row['nom'] ?></option>        
+                    <option value="<?=$row['id']?>"><?php echo $row['nom'] ?></option>        
                     <?php }?>    
                 </select>          
             </div>
@@ -66,6 +81,7 @@ $id=$_SESSION['anneeS'];
         <button class="btn-danger">VOIR</button>
     </form>
 </div>
+<?php } ?>
 <!-- java Script script-->
 <script src="../js/AjouterEtud.js"></script>
 <!-- Bootstrap core JavaScript-->

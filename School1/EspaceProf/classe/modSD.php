@@ -1,7 +1,21 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+     
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +142,7 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
                                  
                                  <?php $id=$_GET['id']; ?>
-   <?php   $result = $db->query(" SELECT * FROM tableSD WHERE id='$id' ");
+   <?php   $result = $db->query(" SELECT * FROM tablesd WHERE id='$id' ");
    
      if($result->num_rows > 0){
       

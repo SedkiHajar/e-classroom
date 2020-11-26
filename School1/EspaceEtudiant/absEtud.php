@@ -1,6 +1,23 @@
 <?php
-   session_start();
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+//  include ('../lang/fb.php');
+// require_once '../database/dbConfig.php'; 
+// require_once '../database/function.php';
+// include("../function/func.php");
+// include('session.php');
+// if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+//       header("location:/School1/EspaceEtudiant/index.php");
+     
+
+//       die();
+//    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +34,8 @@
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
 
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -67,7 +86,9 @@ $id_Etudiant=$_SESSION['CIN'];
             ?>
                     <?php } ?>
 <!-- java Script script-->
-<script src="js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

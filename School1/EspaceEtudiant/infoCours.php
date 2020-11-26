@@ -1,7 +1,21 @@
 <?php
-   //session_start();
-   require_once '../database/dbConfig.php';
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+// include ('../lang/fb.php');
+// require_once '../database/dbConfig.php'; 
+// require_once '../database/function.php';
+// include("../function/func.php");
+// include('session.php');
+  
+//    include("../function/func.php");
+//    include('session.php');
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -180,7 +194,7 @@ $id_Prof= $_SESSION['id'];
 
 
     
-      <td class="bg-success"><a   style="color:white;" href="infoSCetud.php?id_Class=<?php echo ($row['id_Class']); ?>&id_Mat=<?php echo ($row['id_Mat']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&id_Cours=<?php echo ($row['idCour']); ?>"
+      <td class="bg-success"><a   style="color:white;" href="infoSCetud.php?id_Cours=<?php echo ($row['idCour']); ?> "
       	>Voir les supports Cours</a></td>
       
 
@@ -221,6 +235,9 @@ $id_Prof= $_SESSION['id'];
 
 
  <!-- java Script script-->
+ <script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
          <script src="../EspaceProf/js/AjouterEtud.js?2"></script>
         <!-- Bootstrap core JavaScript-->
           <script src="../vendor/jquery/jquery.min.js"></script>

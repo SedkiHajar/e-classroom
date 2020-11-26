@@ -1,7 +1,16 @@
 <?php
-error_reporting(0);
-    require_once '../database/dbConfig.php'; 
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+// error_reporting(0);
+// include ('../lang/fb.php');
+// require_once '../database/dbConfig.php'; 
+// require_once '../database/function.php';
+// include('session.php');
+
 
 ?>
 <!DOCTYPE html>
@@ -37,35 +46,37 @@ error_reporting(0);
 ?>
 <?php require_once '../database/dbConfig.php';
 
-$id_prof=$_SESSION['id'];$an=$_SESSION['anneeP'];  
+$id_prof=$_SESSION['id'];$an=$_SESSION['anneeP'];  $admin=$_SESSION['id_admin'];
  ?>
 
+<!-- ecroire bienveno nom prenom dans votre espace professeur -->
+
+
+<h2 class="m-0 font-weight-bold text-success " >
+BIENVENUE <?php echo strtoupper($login_session); ?>  DANS VOTRE ESPACE PROFESSEUR</h2>
 
 
 
-<h1 class="m-0 font-weight-bold text-success " >BIENVENUE DANS L'ESPACE PROFESSEUR</h1><br>
 
 
 
 
-
-
-
-<?php   $result = $db->query("SELECT DISTINCT (CIN) FROM etudiant e  INNER JOIN matclass m ON m.id_Class=e.classe WHERE m.id_prof='$id_prof' ");
+<?php   $result = $db->query("SELECT DISTINCT CIN,sexe FROM etudiant e  INNER JOIN matclass m ON m.id_Class=e.classe WHERE m.id_prof='$id_prof' and id_admin=$admin ");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
-     <?php while($row = $result->fetch_assoc()){
+      <?php while($row = $result->fetch_assoc()){
       $nbrEtudiant++;
-      if ($row['sexe']=='femme') {
+      if ($row['sexe']=='feminin') {
         $nbrFille++;
         // code...
       }
-      if ($row['sexe']=='homme') {
+      if ($row['sexe']=='masculin') {
         $nbrGarcon++;
         // code...
       }
     }
+       
        ?>
 
         <!-- Begin Page Content -->
@@ -94,6 +105,39 @@ $id_prof=$_SESSION['id'];$an=$_SESSION['anneeP'];
               </div>
             </div>
          
+         <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">Filles inscrites</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-4 col-md-6 mb-4">
+              <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Garcon Inscrits</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; ?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
 
 

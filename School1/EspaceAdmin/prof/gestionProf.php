@@ -1,6 +1,18 @@
 <?php
+error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +29,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
@@ -46,28 +59,7 @@ $param = "gesP" ;
 
 
    <div class="col-md-12">
-   <!-- <form action="gestionProf.php?id_anneeS=<?php echo ($_SESSION['anneeS']); ?>" role="form" method="post" enctype="multipart/form-data">
-   <div class="col-xl-12 col-md-6 mb-4">
-   
-              <label for="classe">Année scolaire</label>
-              <select class="custom-select" name="anneeS" id="">
-                <option selected value="<?php echo $id_anneeS; ?>">Choisir l'année scolaire</option> -->
-                  <!-- <?php
-                  //définir la requete
-                  $result = $db->query("SELECT * FROM anneeS ");
-               
-                  // boucle sur les données
-                  ?>
-                  <?php while ($row =$result->fetch_assoc()) {
-                  ?>
-                   <option value="<?php echo $row['id']; ?>"><?php echo $row['nom']; ?>
-                   </option>
-                 <?php
-               }
-               ?> -->
-              <!-- </select>
-              <button type="submit" class="btn btn-info" name="insererA">CHOISIR</button>
-  </form> -->
+
 </div>
 
 
@@ -75,11 +67,13 @@ $param = "gesP" ;
 
 
 <!-- slect info from table -->
-<?php   
-$id=$_SESSION['anneeS'];//echo 'get: '.$get;
+<?php
+$id=$_SESSION['anneeS'];
+$admin=$_SESSION['id'];
+//echo 'get: '.$get;
   //if (isset($_POST['insererA']) ) {
    //echo ' session: '.$_SESSION['anneeS'];
-  $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id'");
+  $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id' and id_admin=$admin");
      $nbrEtudiant=0;
      $nbrFille=0;
      $nbrGarcon=0; ?>
@@ -100,8 +94,8 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
         <div class="container-fluid">
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Gestion des professeurs</h1>
-           
+            <h1 class="h3 mb-0 text-gray-800"><?=lang('prof') ?><!-- Gestion des professeurs --></h1>
+
           </div>
           <!-- Content Row -->
           <div class="row">
@@ -111,11 +105,13 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Professeurs inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <?=lang('profs') ?><!-- Professeurs inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrEtudiant; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+
+                       <i class="fas fa-users fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -127,11 +123,11 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">Femmes inscrites</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 "><?=lang('women') ?><!-- Femmes inscrites --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrFille; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-female fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -143,11 +139,11 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Hommes Inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?=lang('men') ?><!-- Hommes Inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrGarcon; //}?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-user-tie fa-2x text-green-300"></i>
                     </div>
                   </div>
                 </div>
@@ -156,14 +152,14 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
   <!-- visualiser les etudiant dans un tableaux -->
     <!-- Appel de la base de dennée -->
     <!-- slect info from table -->
-   <?php   $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id'");
+   <?php   $result = $db->query("SELECT * FROM professeur WHERE anneeS='$id' and id_admin=$admin");
      if($result->num_rows > 0){
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
       <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <h6 class="m-0 font-weight-bold text-primary"><?=lang('proft')?><!-- Les professeurs --></h6>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -172,32 +168,31 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
     <tr>
       <th scope="col">#</th>
       <th scope="col">CIN</th>
-      <th scope="col">ANNEE SCOLAIRE</th>
-      <th scope="col">NON</th>
-      <th scope="col">PRENOM</th>
+      <th scope="col" class="text-uppercase"><?=lang('12') ?><!-- ANNEE SCOLAIRE --></th>
+      <th scope="col" class="text-uppercase"><?=lang('contact') ?><!-- NOM COMPLET --></th>
       
-      <th scope="col">PLUS D'INFO</th>
-      <th scope="col">CONTACTER</th>
-      <th scope="col">MODIFIER</th>
-      <th scope="col">SUPPRIMER</th>
+
+      <th scope="col" class="text-uppercase"><?=lang('plus') ?><!-- PLUS D'INFO --></th>
+      <th scope="col" class="text-uppercase"><?=lang('contact') ?><!-- CONTACTER --></th>
+      <!-- <th scope="col">MODIFIER</th> -->
+      <th scope="col" class="text-uppercase"><?=lang('delete') ?><!-- SUPPRIMER --></th>
     </tr>
   </thead>
   <tbody>
     <?php while($row = $result->fetch_assoc()){?>
     <tr>
       <th class="bg-dark" scope="row"><?php echo $i; ?></th>
-      <td class=""><?php echo $row['CIN']; ?></td>
-      <?php $id_anneeS= $row['anneeS']?>                      
-      <?php   $result1 = $db->query("SELECT nomA FROM anneeS WHERE id='$id_anneeS'");?>  
-        <?php while($row1 = $result1->fetch_assoc()){?> 
-      <td class=""><?php echo $row1['nomA']; ?></td><?php  } ?>
-      <td class=""><?php echo  $row['nom']; ?></td>
-      <td ><?php echo  $row['prenom']; ?></td>
-     
-      <td class="bg-info"><a style="color:white;" href="infoProf.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=insertion">Plus </a></td>
-      <td class="bg-warning"><a style="color:white;" href="#">contacter</a></td>
-      <td class="bg-success"><a  style="color:white;" href="#" >modifier</a></td>
-      <td class="bg-danger"><a   style="color:white;" href="uploadProf.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=delete">suprimer</a></td>
+      <td style="color:#130f40"class=""><?php echo $row['CIN']; ?></td>
+      <?php $id_anneeS= $row['anneeS']?>
+      <?php   $result1 = $db->query("SELECT nomA FROM annees WHERE idAn='$id_anneeS'");?>
+        <?php while($row1 = $result1->fetch_assoc()){?>
+      <td style="color:#130f40" class=""><?php echo $row1['nomA']; ?></td><?php  } ?>
+      <td style="color:#130f40" class=""><?php echo  $row['nom'].' '.$row['prenom']; ?></td>
+      
+      <td class=""><a class="btn btn-info" style="color:white;" href="infoProf.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=insertion"><i class="fas fa-info-circle"></i><!-- Plus --> </a></td>
+      <td class=""><a class="btn btn-success" style="color:white;" href="phpmail.php?CIN=<?php echo ($row['CIN']); ?>&id_anneeS=<?php echo ($row['anneeS']); ?>"><i class="fas fa-mail-bulk"></i><!-- contacter --></a></td>
+      <!-- <td style="color:#130f40" class=""><a class="btn btn-success" style="color:white;" href="#" ><i class='fa fa-edit'></i>modifier</a></td> -->
+      <td style="color:#130f40" class=""><a  class="btn btn-danger confirm" style="color:white;" href="uploadProf.php?CIN=<?php echo ($row['CIN']); ?>&amp;choix=delete"><i class='fa fa-close'></i></a></td>
       <?php $i++; ?>
       <?php }
     } ?>
@@ -208,18 +203,18 @@ $id=$_SESSION['anneeS'];//echo 'get: '.$get;
 </div>
 </div>
 
-<?php //} 
+<?php //}
 
 ?>
 <!-- Delete sction-->
 
-<script>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-</script>
 
 <!-- java Script script-->
  <script src="../js/AjouterEtud.js?2"></script>
+ <script src="../js/jquery.js"></script>
 <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

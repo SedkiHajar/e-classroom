@@ -1,13 +1,26 @@
 <?php
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mailM'])  ){
+      header("location:/School1/EspaceMasterAdmin/index");
+     die();
+   }
+  // else  header("location:/School1/EspaceMasterAdmin/welcome");
    //session_start();
-   include('session.php');
+// require_once '../database/function.php';
+// include ('../lang/fb.php');
+
+// include("../function/func.php");
+//    include('session.php');
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -26,7 +39,10 @@
 </head>
 <body>
     <!-- Le code par defaut -->
-<?php require 'defaultMAdmin.php';
+
+<?php 
+$param = "dash" ;
+require 'defaultMaster.php';
 
 /*for ($j = 0; $j <count($_SESSION['nom_Mat']); $j++){
     echo $_SESSION['nom_Mat'][$j];
@@ -37,7 +53,20 @@
 
 
 
-<h1 class="m-0 font-weight-bold text-primary " >BIENVENUE DANS L'ESPACE MASTER ADMIN</h1><br>
+<h2 class="m-0 font-weight-bold text-primary " >
+  <?php  echo strtoupper(lang('1')) .' '. strtoupper($login_session).' '.lang('welcomeM'); ?>
+ <!--  BIENVENUE --> <?php // echo strtoupper($login_session) ; ?> 
+  <!-- DANS VOTRE ESPACE MASTER ADMIN --></h2>
+   <!-- Changer la langue: -->
+  <!-- <div class="row">
+  <div class="col-sm-3"><h5 style="color:blue;"><?= lang('ch')?>:</h5> </div>
+  <div class="col-md-1">
+     <a href="?lang=fr"><img src="/School1/img/flags/fr.png" ></a>
+  </div>
+  <div>
+    <a href="?lang=en"><img src="/School1/img/flags/gb.png" ></a>
+  </div>
+</div>    -->
 
 
 <?php   $result = $db->query("SELECT * FROM admin ");
@@ -55,7 +84,7 @@
         <div class="container-fluid">
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Gestion des Admin</h1>
+            <!-- <h1 class="h3 mb-0 text-gray-800">Gestion des Admin</h1> -->
            
           </div>
           <!-- Content Row -->
@@ -66,11 +95,15 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Admin inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <!-- Admin inscrits -->
+                         <?=lang('eco') ?> 
+                      </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrAdmin; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users-cog fa-2x text-blue-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
                     </div>
                   </div>
                 </div>
@@ -83,12 +116,19 @@
             
 
    <div class="col-xl-12 col-md-6 mb-4">
-   <a class="btn btn-danger "href="logout.php">log out</a>
+   <!-- <a class="btn btn-danger " href="logout.php"> <?//lang('logout')?></a> --><!-- Déconnexion -->
  </div>
    
    
+
+</body>
+
+</html>
+
 <!-- java Script script-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="js/AjouterEtud.js?2"></script>
+<script src="js/jquery.js"></script>
 <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -106,6 +146,3 @@
   <script src="../js/demo/chart-area-demo.js"></script>
   <script src="../js/demo/chart-pie-demo.js"></script>
 
-</body>
-
-</html>

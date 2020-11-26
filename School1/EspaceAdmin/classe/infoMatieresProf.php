@@ -1,7 +1,17 @@
 <?php
-   //session_start();
+  error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+    require_once '../../database/function.php';
+include("../../function/func.php");
    include('../session.php');
+   if(!isset($_SESSION['id']) or !isset($_SESSION['mailA'])  ){
+      header("location:/School1/EspaceAdmin/index.php");
+     // header("location:/School1/index.php");
+      //header("location:/index.php");
+
+      die();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +28,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" rel="stylesheet">
-
+<!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
@@ -194,7 +205,7 @@ $result = $db->query("SELECT * FROM classe where anneeS='$id'");
       
       <td class="bg-info"><a   style="color:white;" href="AjouterCours.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>">Ajouter Cours</a></td>
       
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer">suprimer</a></td>
+      <td class=""><a  class="btn btn-danger confirm" style="color:white;" href="uploadCl.php?id_Mat=<?php echo ($row['id_Mat']); ?>&id_Class=<?php echo ($row['id_Class']); ?>&id_prof=<?php echo ($row['id_prof']); ?>&amp;choix=supprimer"><i class='fa fa-close'></i>supprimer</a></td>
       <?php $i++; ?>
       <?php } ?>
     </tr>
@@ -211,7 +222,12 @@ $result = $db->query("SELECT * FROM classe where anneeS='$id'");
 
 
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
+
+<!-- java Script script-->
+
+ <script src="../js/jquery.js"></script>
 
 
         <!-- java Script script-->

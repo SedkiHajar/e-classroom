@@ -1,7 +1,21 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+   
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,15 +145,24 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
                                  
                                  <?php $id_Devoir=$_GET['id_Devoir']; ?>
-   <?php   $result = $db->query(" SELECT * FROM devoir WHERE id='$id_Devoir' ");
+                                 <?php $id_Cours=$_GET['id_Cours']; ?>
+                                  <?php $id_Class=$_GET['id_Class'];?>
+                                <?php $id_Mat=$_GET['id_Mat'];?>
+                                <?php $id_prof=$_GET['id_prof'];?>
+   <?php   $result = $db->query(" SELECT * FROM devoir c WHERE id='$id_Devoir' ");
+   $res=$db->query("SELECT nom from devoir where id='$id_Devoir");
+    //$ses_sql = mysqli_query($db,"select * from professeur where mail = '$user_check' ");
+   
+   
+
    
      if($result->num_rows > 0){
       
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
-      <div class="card-header py-3">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
+      <div class="card-header py-3"> <?php //echo "mati $id_Mat and  prof $id_prof" ?>
           <h6 class="m-0 font-weight-bold text-primary">Les devoirs</h6>
       </div>
       <div class="card-body">
@@ -168,14 +191,14 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
       <?php   $result1 = $db->query("SELECT * FROM devoir WHERE id='$id_Devoir'");?>
       <?php while($row1 = $result1->fetch_assoc()){?> 
       <td class="bg-success">
-          <form action="uploadCl.php?id_Devoir=<?php echo ($row['id']); ?>" role="form" method="post" enctype="multipart/form-data">
+          <form action="uploadCl.php?id_Devoir=<?php echo ($row['id']); ?>&id_Cours=<?php echo ($row['id_Cours']); ?>&id_Class=<?=$id_Class?>" role="form" method="post" enctype="multipart/form-data">
 
           <input name=nom value="<?php echo ($row['nom']); ?>" >
         </td> 
       <td class="bg-warning">
         <textarea rows="4" cols="50" class="form-control" id="description" name="description" ><?php echo ($row['description']); ?></textarea></td>
       <?php } ?>
-      <td class="bg-primary"><button class="btn btn-primary" type="submit" name="modifierDevoir">modifier</button></td></form>
+      <td class=""><button class="btn btn-primary" type="submit" name="modifierDevoir"><i class="fa fa-edit"></i></button></td></form>
       
       <?php $i++; ?>
       <?php } ?>

@@ -1,7 +1,20 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+     
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,13 +143,16 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
             <!--cors du formulaire-->
            
            <?php $id_Cours=$_GET['id_Cours']; ?>
+           <?php $id_Class=$_GET['id_Class'];?>
+           <?php $id_Mat=$_GET['id_Mat'];?>
+           <?php $id_prof=$_GET['id_prof'];?>
            <?php   $result1 = $db->query("SELECT * FROM cours WHERE idCour='$id_Cours' " );?>
            <?php while($row1 = $result1->fetch_assoc()){?>
            
 
-           <form action="uploadCl.php?id_Cours=<?php echo ($row1['idCour']); ?>" role="form" method="post" enctype="multipart/form-data"><?php }?>
+           <form action="uploadCl.php?id_Cours=<?php echo ($row1['idCour']); ?>&id_Class=<?=$id_Class ?>&id_Mat=<?=$id_Mat ?>&id_prof=<?=$id_prof ?>" role="form" method="post" enctype="multipart/form-data"><?php }?>
                <h3 class=" font-weight-bold text-info text-center shadow  titre"> DEVOIR </h3>
-                <div id="form" class="shadow "style="margin-top:20px;">
+                <div id="form" class="shadow " style="margin-top:20px;">
                  <div class="form-row">
                  
                       <div class="form-group col-md-6">

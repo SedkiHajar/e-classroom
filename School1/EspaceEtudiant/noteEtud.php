@@ -1,6 +1,24 @@
 <?php
-   //session_start();
-   include('session.php');
+include('init.php');
+include('session.php');
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }
+/*require_once '../database/dbConfig.php'; 
+require_once '../database/function.php';
+include('session.php');
+include ('../lang/fb.php');
+include("../function/func.php");
+
+if(!isset($_SESSION['idEtu']) or !isset($_SESSION['mailEtu'])  ){
+      header("location:/School1/EspaceEtudiant/index.php");
+     
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,14 +56,14 @@ $nom_Mat=$_GET['nom_mat'];
 //isertion des notes
 ?>
   <div class="container-fluid"><div class="col-xl-12 col-lg-12 card shadow mb-4 " style="margin-top:10px;">
-<a href="javascript:window.history.back()"><i class="fas fa-arrow-circle-left"></i>Retour</a>
+<a href="javascript:window.history.back()"><i class="fas fa-arrow-circle-left"></i><?=lang('7') ?><!-- Retour --></a>
 </div>
 
-       <h3 class=" font-weight-bold text-info text-center shadow  titre"> Eleve :<?php echo $login_session;?></h3>
+       <h3 class=" font-weight-bold text-info text-center shadow  titre"> Elève :<?php echo $login_session;?></h3>
 <!--formulaire-->
 <form action="" role="form" method="POST" enctype="multipart/form-data">
 <div class="card-body">
-      <h3 class=" font-weight-bold text-danger  shadow  titre"> Maitere : <?php echo $nom_Mat; ?></h3>
+      <h3 class=" font-weight-bold text-danger  shadow  titre"> Matière : <?php echo $nom_Mat; ?></h3>
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead  class="table table-hover table-dark">
@@ -53,7 +71,7 @@ $nom_Mat=$_GET['nom_mat'];
                     <th scope="col">#</th> 
                     <th scope="col">exam</th> 
                     <th scope="col">note</th> 
-                    <th scope="col">appreciation</th>  
+                    <th scope="col">appréciation</th>  
                 </tr>
             </thead>
             <tbody>
@@ -78,7 +96,10 @@ $nom_Mat=$_GET['nom_mat'];
 
 
 <!-- java Script script-->
-<script src="js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/AjouterEtud.js?2"></script>
+<script src="EspaceAdmin/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- <script src="js/AjouterEtud.js?2"></script> -->
 <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

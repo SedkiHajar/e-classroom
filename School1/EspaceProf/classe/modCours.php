@@ -1,7 +1,20 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +31,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['image']); ?>" rel="stylesheet">
-
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
@@ -130,6 +144,9 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
                                  
                                  <?php $id_Cours=$_GET['id_Cours']; ?>
+                                  <?php $id_Class=$_GET['id_Class'];?>
+                                <?php $id_Mat=$_GET['id_Mat'];?>
+                                <?php $id_prof=$_GET['id_prof'];?>
    <?php   $result = $db->query(" SELECT * FROM cours WHERE idCour='$id_Cours' ");
    
      if($result->num_rows > 0){
@@ -137,7 +154,7 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
       <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Les cours</h6>
       </div>
@@ -167,14 +184,14 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
       <?php   $result1 = $db->query("SELECT * FROM cours WHERE idCour='$id_Cours'");?>
       <?php while($row1 = $result1->fetch_assoc()){?> 
       <td class="bg-success">
-          <form action="uploadCl.php?id_Cours=<?php echo ($row['idCour']); ?>" role="form" method="post" enctype="multipart/form-data">
+          <form action="uploadCl.php?id_Cours=<?php echo ($row['idCour']); ?>&id_Class=<?=$id_Class?>&id_Mat=<?=$id_Mat?>&id_prof=<?=$id_prof?>" role="form" method="post" enctype="multipart/form-data">
 
           <input name="nom" value="<?php echo ($row['nom']); ?>" >
         </td> 
       <td class="bg-warning">
         <textarea rows="4" cols="50" class="form-control" id="description" name="description" ><?php echo ($row['description']); ?></textarea></td>
      <?php } ?>
-      <td class="bg-primary"><button class="btn btn-primary" type="submit" name="modifierCours">modifier</button></td></form>
+      <td class=""><button class="btn btn-primary" type="submit" name="modifierCours"><i class="fa fa-edit"></i></button></td></form>
       
       <?php $i++; ?>
       <?php } ?>
@@ -202,6 +219,8 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
 
         <!-- java Script script-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery.js"></script>
          <script src="../js/AjouterEtud.js?2"></script>
         <!-- Bootstrap core JavaScript-->
           <script src="../../vendor/jquery/jquery.min.js"></script>

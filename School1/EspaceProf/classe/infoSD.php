@@ -1,7 +1,21 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    
+
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +32,8 @@
   <!-- Custom fonts for this template-->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+  <!-- icones -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
   <!-- Mon css -->
@@ -132,14 +147,17 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
                                 
                                 
                                 <?php $id_Devoir=$_GET['id_Devoir'];?>
-   <?php   $result = $db->query(" SELECT * FROM tableSD WHERE id_Devoir='$id_Devoir'");
+                                <?php $id_Class=$_GET['id_Class'];?>
+    <?php $id_Mat=$_GET['id_Mat']; ?>
+    <?php $id_prof=$_GET['id_prof'];?>
+   <?php   $result = $db->query(" SELECT * FROM tablesd WHERE id_Devoir='$id_Devoir'");
    
      if($result->num_rows > 0){
       
          $i=1; ?>
    <!-- Table of prosect  -->
    <!-- DataTales Example -->
-  <div class="card shadow col-xl-12 col-md-6 mb-4">
+  <div class="card shadow col-xl-12 col-md-12 mb-4">
       <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Les supports du devoir</h6>
       </div>
@@ -165,10 +183,10 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
 
      
-       <td class="bg-success"  ><a   style="color:white;" href="<?php echo htmlspecialchars($row['nom'])?>">Voir Support Devoir</a></td>
+       <td   ><a class="btn btn-success"  style="color:white;" href="<?php echo htmlspecialchars($row['nom'])?>">Voir Support Devoir</a></td>
       
       <!--<td class="bg-info"><a style="color:white;" href="modSD.php?id=<?php echo ($row['id']); ?>">Modifier </a></td>-->
-      <td class="bg-danger"><a   style="color:white;" href="uploadCl.php?id=<?php echo ($row['id']); ?>&amp;choix=deleteSD">supprimer</a></td>
+      <td ><a  class="btn btn-danger confirm"   style="color:white;" href="uploadCl.php?id=<?php echo ($row['id']); ?>&id_Class=<?=$id_Class?>&amp;choix=deleteSD"><i class="fa fa-close"></i></a></td>
       <?php $i++; ?>
       <?php } ?>
     </tr>
@@ -187,6 +205,8 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
 
 <!-- java Script script-->
+ <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery.js"></script>
  <script src="../js/AjouterEtud.js?2"></script>
 <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>

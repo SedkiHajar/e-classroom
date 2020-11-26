@@ -2,7 +2,11 @@
 error_reporting(0); 
 session_start();
 // Include the database configuration file
+include ('../../lang/fb.php');
 require_once '../../database/dbConfig.php';
+require_once '../../database/function.php';
+
+include("../../function/func.php");
 error_reporting(0);
 
 
@@ -18,6 +22,7 @@ $status = $statusMsg = '';
   ;
         // Get info for prospect
         $nom=$_POST['nom'];
+        $admin=$_SESSION['id'];
        
 
 
@@ -30,7 +35,7 @@ $status = $statusMsg = '';
           
           
 
-         $insert = $db->query("INSERT into anneeS(nomA) VALUES ('$nom[$j]')");
+         $insert = $db->query("INSERT into annees(nomA,idAdm) VALUES ('$nom[$j]',$admin)");
         if($insert){
                 $status = 'success';
                 $statusMsg = "prospect upload successfully.";
@@ -50,7 +55,7 @@ $status = $statusMsg = '';
                 $id=$_GET['id'];
              
 
-          $sql = "UPDATE anneeS SET nomA='$nom' WHERE id='$id'";
+          $sql = "UPDATE annees SET nomA='$nom' WHERE idAn='$id' and idAdm=$admin";
           echo $CIN;
             if ($db->query($sql) === TRUE) {
               echo "Record updated successfully";
@@ -71,7 +76,7 @@ $status = $statusMsg = '';
                 $id=$_GET['id'];
               // code...
             // delete section
-            $sql = "DELETE FROM anneeS WHERE id='$id'";
+            $sql = "DELETE FROM annees WHERE idAn='$id' and idAdm=$admin";
 
             if ($db->query($sql) === TRUE) {
               echo "Record deleted successfully";

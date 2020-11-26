@@ -1,7 +1,20 @@
 <?php
-   //session_start();
+include('init.php');
+include('../session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    die();
+   }
+/*error_reporting(0);
+include ('../../lang/fb.php');
    require_once '../../database/dbConfig.php';
+   require_once '../../database/function.php';
    include('../session.php');
+    if(!isset($_SESSION['id']) or !isset($_SESSION['mail'])  ){
+      header("location:/School1/EspaceProf/index.php");
+    
+      die();
+   }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +141,7 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
                                  
                                  <?php $id=$_GET['id']; ?>
-   <?php   $result = $db->query(" SELECT * FROM tableSC WHERE id='$id' ");
+   <?php   $result = $db->query(" SELECT * FROM tablesc WHERE id='$id' ");
    
      if($result->num_rows > 0){
       
@@ -196,6 +209,8 @@ $result = $db->query("SELECT DISTINCT c.nom,c.id FROM classe c INNER JOIN matcla
 
 
         <!-- java Script script-->
+         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../js/jquery.js"></script>
          <script src="../js/AjouterEtud.js?2"></script>
         <!-- Bootstrap core JavaScript-->
           <script src="../../vendor/jquery/jquery.min.js"></script>

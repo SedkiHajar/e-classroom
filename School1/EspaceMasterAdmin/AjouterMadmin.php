@@ -1,6 +1,11 @@
 <?php
-   //session_start();
-   include('session.php');
+ include('init.php');
+ include('session.php');
+if(!isset($_SESSION['id']) or !isset($_SESSION['mailM'])  ){
+      header("location:/School1/EspaceMasterAdmin/index");
+     die();
+   }
+   //else  header("location:/School1/EspaceMasterAdmin/welcome");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,14 +25,21 @@
   <link href="../css/css1.css" rel="stylesheet">
 </head>
 <body>
-<?php require 'defaultMAdmin.php';?>
+<?php 
+$param ="ajoA";
+require 'defaultMaster.php';?>
 <!-- Appel de la base de dennée -->
 <?php require_once '../database/dbConfig.php'; ?>
 <!-- slect info from table -->
-<h1 class="m-0 font-weight-bold text-primary " >BIENVENUE DANS L'ESPACE MASTER ADMIN</h1><br>
 
+<!-- <h2 class="m-0 font-weight-bold text-primary " >
+  BIENVENUE <?php echo strtoupper($login_session); ?> 
+  DANS VOTRE ESPACE MASTER ADMIN</h2><br> -->
 
-<?php   $result = $db->query("SELECT * FROM admin ");
+<?php   
+$master=$_SESSION['id'];  
+
+$result = $db->query("SELECT * FROM admin where idMas='$master' ");
      $nbrAdmin=0;
       ?>
      <?php while($row = $result->fetch_assoc()){
@@ -41,10 +53,10 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Gestion des Admin</h1>
+         <!--  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Statistiques</h1>
            
-          </div>
+          </div> -->
           <!-- Content Row -->
           <div class="row">
             <!-- Earnings (Monthly) Card Example -->
@@ -53,11 +65,12 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Admin inscrits</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= lang('eco')?><!-- Admins inscrits --></div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $nbrAdmin; ?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users-cog fa-2x text-blue-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
                     </div>
                   </div>
                 </div>
@@ -81,49 +94,49 @@
             </div>
           </div>-->
           <!-- formulaire des etudiant a ajouter  -->
-            <div class="col-xl-12 col-lg-12 card shadow mb-4 "style="background-color:white;font-weight: bold;">
+            <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="background-color:white;font-weight: bold;">
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h2 class="m-0 font-weight-bold text-primary ">INFO ADMIN</h2>
+                  <h2 class="m-0 font-weight-bold text-primary text-uppercase "><?= lang('Adda') ?><!-- INFO ADMIN --></h2>
               </div>
             </div>
             <!--check box-->
               <div class="form-group col-md-6 mx-auto">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text text-primary">Nombre d'admin a créer</span>
+                <span class="input-group-text text-primary text-uppercase"><?=lang('nbrE') ?><!-- Nombre d'admin a créer --></span>
               </div>
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <input type="checkbox" aria-label="Checkbox for following text input" id="myCheck"onclick=" AjouterAdmin()">
+                  <input type="checkbox" aria-label="Checkbox for following text input" id="myCheck"onclick=" AjouteAdmin()">
                 </div>
               </div>
-              <input type="number" class="form-control" aria-label="Text input with checkbox"id="nbrEtudiant" value="1">
+              <input type="number" class="form-control" aria-label="Text input with checkbox" id="nbrEtudiant" value="1">
             </div>
           </div>
             <!--cors du formulaire-->
-           <form action="uploadMadmin.php" role="form" method="post" enctype="multipart/form-data">
-               <h3 class=" font-weight-bold text-info text-center shadow  titre"> ADMIN NUMERO  : 1</h3>
-                <div id="form" class="shadow "style="margin-top:20px;">
+           <form action="uploadMadmin" role="form" method="post" enctype="multipart/form-data">
+               <h3 class=" font-weight-bold text-info text-center shadow  titre"><?= lang('school').' '.lang('num') ?>  : 1</h3> <!-- ADMIN NUMERO -->
+                <div id="form" class="shadow " style="margin-top:20px;">
             
              
              
           <div class="form-row">
             <div class="form-group col-md-6">
-                       <label for="nom">Nom</label>
-                       <input type="text" class="form-control" id="nom" name="nomE[]"  required>
+                       <label for="nom"><?=lang('Name') ?></label>
+                       <input type="text" class="form-control"  id="nom" name="nomE[]"  required>
             </div>
             <div class="form-group col-md-6">
-              <label for="email">E-mail</label>
+              <label for="email"><?=lang('Email') ?></label>
               <input type="email" class="form-control" id="email" name="email[]" required>
             </div>
             <div class="form-group col-md-6">
-              <label for="email">Password</label>
-              <input type="text" class="form-control" id="mdp" name="mdp[]" required>
+              <label for="Password"><?=lang('pass') ?></label>
+              <input type="Password"  class="form-control" id="mdp" name="mdp[]" required>
             </div>
             <div class="form-group col-md-6">
-              <label for="societe">photo</label>
-              <input type="file" class="form-control" id="image" name="image[]" required>
+              <label for="societe"><?=lang('pic') ?></label>
+              <input type="file" class="form-control"  id="image" name="image[]" required>
             </div>
             
           </div>
@@ -131,10 +144,35 @@
             <!--cors du formulaire-->
         <div id="AjoutDeform"></div>
         </div>
-       <button type="submit" class="btn btn-primary" name="inserer">submit</button>
+       <button type="submit" class="btn btn-primary" name="inserer"><i class="fas fa-plus-circle"></i> 
+       <!-- submit --><?= lang('ajout')?>
+       </button>
 </form>
   </body>
   </html>
+  <script type="text/javascript">
+function AjouteAdmin() {
+  var nbrContact=document.getElementById("nbrEtudiant").value;
+  var test=document.getElementById("myCheck");
+  var cont =document.getElementById("form").innerHTML;
+  console.log(nbrContact);
+  console.log(nbrContact);
+  console.log(cont);
+  if(test.checked==true){
+
+  var i;
+for (i = 0; i <(nbrContact-1); i++) {
+ document.getElementById("AjoutDeform").innerHTML+="<hr class='sidebar-divider'>"+"<h3 class='font-weight-bold text-info text-center shadow  titre'><?= lang('school').' '.lang('num')?> : "+(i+2)+' </h3>'+cont;
+
+}
+}
+else{
+  document.getElementById("AjoutDeform").innerHTML="";
+}
+
+}
+
+  </script>
  
 <!-- java Script script--><script src="js/AjouterEtud.js?2"></script>
 <!-- Bootstrap core JavaScript-->
