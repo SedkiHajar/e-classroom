@@ -3,7 +3,9 @@
    include ('../lang/fb.php');
     require_once '../database/dbConfig.php'; 
     require_once '../database/function.php';
+
 include("../function/func.php");
+$nomecole=$_GET['ecole'] ;echo $nomecole;
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form 
       $mail = mysqli_real_escape_string($db,$_POST['email']);
@@ -61,12 +63,20 @@ include("../function/func.php");
   </style>
 </head>
 <body>
+  <?php 
+  $sql = "SELECT * FROM admin WHERE nomE = '$nomecole' ";
+      $result = mysqli_query($db,$sql);
+      if($result->num_rows > 0){
+        
+      
+          
+  ?>
 <!-- Le code par defaut -->
       <div class="col-xl-12 col-lg-12 card shadow mb-4 " >
         <a href="javascript:window.history.back()"><i class="fas fa-arrow-circle-left"></i><?=lang('7') ?></a>
       </div>
       <div  class="loginbox ">
-            <img src="../img/admin.jpeg" class="user">
+            <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['avatarA']); ?>" alt="" class="user"/> <?php }?>
             <h4> <?=lang('2') ?></h4>
             <form class="form-signin" action="" method="POST">
             <div class="textbox">
