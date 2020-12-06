@@ -51,6 +51,14 @@ include("../function/func.php");
 
 </head>
 <body>
+	<?php $nomecole=$_GET['ecole'] ;
+	$sql = "SELECT * FROM admin WHERE nomE = '$nomecole' ";
+      $result = mysqli_query($db,$sql);
+      if($result->num_rows > 0){
+      	
+      }
+          
+	?>
     <!-- Le code par defaut -->
 
  <div class="col-xl-12 col-lg-12 card shadow mb-4 " style="margin-top:10px;">
